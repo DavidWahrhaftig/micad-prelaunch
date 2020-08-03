@@ -13,7 +13,7 @@
                 >Visitors</router-link>
         <a  
         class="nav__link"
-        href="http://desktop-sqinctu:5000/client"
+        href="https://micad-prelaunch.herokuapp.com/client"
         >Client View</a>
     </div>
 </template>
