@@ -86,8 +86,8 @@ app.get('/client', checkAdminAuthorizedClientURL,(req,res) =>{
 });
 
 app.get('/admin', (req, res) => {
-    res.send("ADMIN PAGE");
-    // res.sendFile(path.join(__dirname, 'admin/index.html'));
+    // res.send("ADMIN PAGE");
+    res.sendFile(path.join(__dirname, 'admin/index.html'));
 });
 
 app.get('*', (req, res) => {
