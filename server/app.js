@@ -22,7 +22,10 @@ app.use(express.static(path.join(__dirname, 'admin')));
 
 // Bring in the Database Config
 // const db = require('./config/keys').mongoURI;
-const db = 'mongodb://localhost:27017/micad-coming-soon';
+// const db = 'mongodb://localhost:27017/micad-prelaunch';
+
+// Bring in the Database Config
+const db = require('./keys').mongoURI;
 // Run this for development "C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe"
 mongoose.connect(db, 
     {   
@@ -74,17 +77,17 @@ function checkAdminAuthorizedClientURL(req, res, next) {
 
 }
 
+app.get('/', (req,res) => {
+    res.send("Invalid path, you may have meant /client");
+});
 
-// app.get('*', (req, res) => {
-//     console.log(path.join(__dirname, 'public/index.html'));
-//     res.sendFile(path.join(__dirname, 'public/index.html'));
-// });
 app.get('/client', checkAdminAuthorizedClientURL,(req,res) =>{
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'admin/index.html'));
+    res.send("ADMIN PAGE");
+    // res.sendFile(path.join(__dirname, 'admin/index.html'));
 });
 
 app.get('*', (req, res) => {
@@ -95,5 +98,6 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, '0.0.0.0', () => console.log(`Server started on port ${PORT}`));
+// app.listen(PORT, '0.0.0.0', () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
