@@ -15,6 +15,10 @@
         class="nav__link"
         href="https://micad-prelaunch.herokuapp.com/client"
         >Client View</a>
+        <a  
+        class="nav__link"
+        href="http://localhost:5000/client"
+        >Client View</a>
     </div>
 </template>
 
