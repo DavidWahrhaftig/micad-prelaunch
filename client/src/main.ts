@@ -5,7 +5,11 @@ import router from './router';
 
 Vue.config.productionTip = false
 
-
+// const clientID  = localStorage.getItem("clientID");
+// // If there is any token then we will simply append default axios authorization headers
+// if (clientID) {
+//     Vue.prototype.$http.defaults.headers.common['Authorization'] = clientID;
+// }
 
 new Vue({
     router,

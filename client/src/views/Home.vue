@@ -1,9 +1,11 @@
 <template>
     <div>
-        <div class="message">Welcome text set by Admin</div>
+        <!-- <div class="message">Welcome text set by Admin</div> -->
+        <h1>Hello <span class="client-name">{{$store.state.clientConfig.clientName}}</span> user</h1>
         <app-countdown 
-            :launchDate="new Date($store.state.adminSettings.launchDate)" 
-            :urls="$store.state.adminSettings.urls"/>
+            v-if="$store.state.clientConfig"
+            :launchDate="new Date($store.state.clientConfig.launchDate)" 
+            :urls="$store.state.clientConfig.urls"/>
     </div>
 </template>
 
@@ -18,5 +20,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-
+    .client-name {
+        color: $color-primary;
+    }
 </style>

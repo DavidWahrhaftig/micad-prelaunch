@@ -4,7 +4,7 @@ const   express     = require('express'),
         path        = require('path'),
         app         = express();
 
-const Config = require('./model/Config');
+const Client = require('./model/Client');
 
 // Middlewares
 // Form Data Middleware
@@ -35,13 +35,13 @@ mongoose.connect(db,
     }).then(() => {
         console.log(`Database connected successfully ${db}`);
         
-        Config.findOne({}).then(admin => {
-            if (!admin) {
+        Client.findOne({}).then(client => {
+            if (!client) {
                 // need to setup Config collection
                 // const adminSettings = {
                 //     title: 'Uoft'
                 // }
-                Config.create({}).then(res => {
+                Client.create({clientName: 'Oxford'}).then(res => {
                     console.log(res);
                 }).catch(err => {
                     console.log(err);
@@ -63,25 +63,25 @@ app.use('/api/admin', admin);
 
 // middleware
 
-function checkAdminAuthorizedClientURL(req, res, next) {
-    Config.findOne({}).then(admin => {
-        console.log("admin enabled", admin.enable);
-        if(admin.enable) next();
-        else {
-            res.send('Admin didn\'t authorize page yet!');
-        }
-    }).catch(err => {
-        console.log(err);
-        res.send('error checking admin authorization');
-    });
+// function checkAdminAuthorizedClientURL(req, res, next) {
+//     Client.findOne({}).then(admin => {
+//         console.log("admin enabled", admin.enable);
+//         if(admin.enable) next();
+//         else {
+//             res.send('Admin didn\'t authorize page yet!');
+//         }
+//     }).catch(err => {
+//         console.log(err);
+//         res.send('error checking admin authorization');
+//     });
 
-}
+// }
 
 app.get('/', (req,res) => {
     res.send("Invalid path, you may have meant /client");
 });
 
-app.get('/client', checkAdminAuthorizedClientURL,(req,res) =>{
+app.get('/client',(req,res) =>{
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 

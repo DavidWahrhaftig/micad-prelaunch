@@ -1,16 +1,15 @@
 <template>
     <div class="header"> 
-        <!-- <app-micad-logo class="header__logo"/> -->
         <div class="header__logo">
             <img src="../assets/micad_prelauncher_logo.svg" alt="">
         </div>
-        <!-- <img class="header__logo" src="../assets/micad_prelauncher_logo.svg" alt=""> -->
-        <!-- <app-coming-soon class="header__title"/>  -->
-        <div class="header__title">
+        <div class="header__title" >
         
-            <div class="header__title--main">
-                <!-- Coming soon! <span class="ipr-36">IPR 3.6</span> -->
-                {{$store.state.adminSettings.title}}
+            <div class="header__title--main" v-if="$store.state.clientConfig">
+                {{$store.state.clientConfig.header}}
+            </div>
+            <div class="header__title--main" v-else>
+                Pre-launch, Client not Identified
             </div>
 
             <div class="header__title--sub">

@@ -27,22 +27,6 @@
                         Overwrite IPS
                     </button> 
                 </div>
-                
-                <!-- <button @click="$emit('submit')" 
-                        class="form__btn form__btn-submit"
-                        v-if="!fetchedUser">
-                    Submit IP
-                </button>
-                <button class="form__btn form__btn-add"
-                        @click="$emit('add', false)"
-                        v-if="fetchedUser">
-                    Add IP
-                </button>
-                <button class="form__btn form__btn-overwrite"
-                        @click="$emit('add', true)"
-                        v-if="fetchedUser">
-                    Overwrite IPS
-                </button>  -->
             </div>
             <div class="form__group" v-else>
                 <div class="form__message" :class="{'form__message--invalid': ipAlreadyRecorded}">{{ message }}</div>
@@ -73,7 +57,7 @@ export default Vue.extend({
         async "$store.state.email"() {
             if(this.isEmailValid) {
                 console.log("valid email");
-                const res = await axios.get(`/api/users/${this.email}`);
+                const res = await axios.get(`/api/users/${this.$store.getters.clientID}/${this.email}`);
                 this.setFetchedUser(res.data.user);
             } else {
                 console.log("email not valid");
@@ -97,7 +81,7 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .form {
+    .form-previous {
         width: 36rem;  
         margin: 0 auto;
         &__group:not(:last-child) {

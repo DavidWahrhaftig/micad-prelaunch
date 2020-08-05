@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <app-header class="header"/>
-    <div class="grid__wrapper" v-if="$store.state.adminSettings">
+    <div class="grid__wrapper">
         <app-nav class="grid__item grid__item--menu"/>
         <app-content class="grid__item grid__item--view"/>
     </div>
@@ -24,11 +24,14 @@ export default Vue.extend({
     },    
 
     methods: {
-        ...mapActions(['fetchAdminSettings'])
+        ...mapActions(['fetchClient'])
     },
 
     async created() {
-        await this.fetchAdminSettings();
+        if (this.$store.getters.isClientIdentified) {
+            await this.fetchClient(this.$store.getters.clientID);
+        }
+        
     }
     
 });

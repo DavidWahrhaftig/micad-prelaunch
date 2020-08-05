@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 // Create the User Schema
 const UserSchema = new mongoose.Schema({
+    clientID: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true

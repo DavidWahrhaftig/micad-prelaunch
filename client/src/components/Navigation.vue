@@ -1,10 +1,13 @@
 <template>
-    <div class="nav__wrapper">
-        <router-link to="/" 
-                    class="nav__link"
-                    :class="{'nav__link-current': $route.name == 'welcome'}"
-                    tag="a"
-                    ><span>Welcome</span></router-link>
+    <div>
+        <div class="nav__wrapper" v-if="$store.getters.isClientIdentified">
+
+            <router-link to="/" 
+                        class="nav__link"
+                        :class="{'nav__link-current': $route.name == 'welcome'}"
+                        tag="a"
+                        ><span>Welcome</span></router-link>
+                
             <router-link to="/details" 
                     class="nav__link"
                     :class="{'nav__link-current': $route.name == 'details'}"
@@ -15,26 +18,37 @@
                     :class="{'nav__link-current': $route.name == 'instructions'}"
                     tag="a"
                     >Instructions</router-link>
-            <router-link to="/releasenotes" 
+            <a  class="nav__link"
+                :href="$store.state.clientConfig.releaseNotes"
+                >Release Notes</a>
+            <a  class="nav__link"
+                href="https://micad.co.uk/"
+                >micad Website</a>
+            <a  class="nav__link"
+                href="https://support.zoho.com/portal/micad/en/signin"
+                >Contact Support</a>
+            <a  class="nav__link"
+                href="#"
+                @click="removeClientID"
+                >Change Client</a>
+        </div>
+        
+        <div class="nav__wrapper" v-else>
+            <router-link to="/login" 
                     class="nav__link"
-                    :class="{'nav__link-current': $route.name == 'Release Notes'}"
+                    :class="{'nav__link-current': $route.name == 'login'}"
                     tag="a"
-                    >Release Notes</router-link>
-            <a 
-                    class="nav__link"
-                    href="https://micad.co.uk/"
-                    >micad Website</a>
-            <router-link to="/support" 
-                    class="nav__link"
-                    :class="{'nav__link-current': $route.name == 'support'}"
-                    tag="a"
-                    >Contact Support</router-link>
+                    >Login</router-link>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-
+    methods: {
+        ...mapActions(['removeClientID'])
+    }
 }
 </script>
 

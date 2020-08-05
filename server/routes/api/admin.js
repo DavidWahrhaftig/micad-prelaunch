@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../../model/User');
-const Config = require('../../model/Config');
+const Client = require('../../model/Client');
 
-// Get admin settings - api/admin/
-router.get('/', (req, res) => {
-    Config.findOne({})
-        .then(config => {
+// Get admin settings of a client - api/admin/:clientID
+router.get('/:clientID', (req, res) => {
+    Client.findById(req.params.clientID)
+        .then(client => {
             res.status(200).json({
                 success: true,
-                config,
+                client,
                 msg: 'Get Admin Config'
             });
         }).catch(err => {
@@ -20,16 +20,14 @@ router.get('/', (req, res) => {
             });
         });
 });
-// Update admin settings - api/admin/
-router.put('/', (req, res) => {
-    // let adminSettings = req.body.adminSettings;
-    // adminSettings.launchDate = new Date(adminSettings.launchDate);
-    Config.findOneAndUpdate({}, req.body.adminSettings)
-        .then(config => {
-            res.status(200).json({
+
+router.post('/', (req, res) => {
+    Client.create({clientName: req.body.clientName})
+        .then(newClient => {
+            res.status(201).json({
                 success: true,
-                config,
-                msg: 'Updated Admin Settings'
+                client: newClient,
+                msg: 'Get Admin Config'
             });
         }).catch(err => {
             res.status(404).json({
@@ -39,9 +37,28 @@ router.put('/', (req, res) => {
         });
 });
 
-// Get user ips - api/admin/users 
-router.get('/users', (req, res) => {
-    User.find({})
+
+// Update admin settings - api/admin/:clientID
+router.put('/:clientID', (req, res) => {
+    // let adminSettings = req.body.adminSettings;
+    // adminSettings.launchDate = new Date(adminSettings.launchDate);
+    Client.findByIdAndUpdate(req.params.clientID, req.body.adminSettings)
+        .then(client => {
+            res.status(201).json({
+                success: true,
+                msg: 'Updated Client Settings'
+            });
+        }).catch(err => {
+            res.status(404).json({
+                success: false,
+                msg: err.message
+            });
+        });
+});
+
+// Show user ips of a client - api/admin/:clientID/users 
+router.get('/:clientID/users', (req, res) => {
+    User.find({clientID: req.params.clientID})
         .then(users => {
             res.status(200).json({
                 success: true,

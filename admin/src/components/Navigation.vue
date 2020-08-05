@@ -11,10 +11,10 @@
                 :class="{'nav__link-current': $route.name === 'Visitors IPs'}"
                 tag="a"
                 >Visitors</router-link>
-        <a  
+        <!-- <a  
         class="nav__link"
         href="https://micad-prelaunch.herokuapp.com/client"
-        >Client View</a>
+        >Client View</a> -->
         <a  
         class="nav__link"
         href="http://localhost:5000/client"
