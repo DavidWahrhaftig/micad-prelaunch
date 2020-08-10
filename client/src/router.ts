@@ -5,7 +5,7 @@ import Login from './views/Login.vue';
 import Details from './views/Details.vue';
 import Instructions from './views/Instructions.vue';
 import ReleaseNotes from './views/ReleaseNotes.vue';
-import { store } from './store';
+import store from './store';
 
 Vue.use(VueRouter);
 
@@ -17,7 +17,7 @@ const routes = [
     },
     {
         path: '/login',
-        name: 'login',
+        name: 'identify client',
         component: Login,
         // beforeEnter: (to: any, from: any, next: any) => {
         //     if (!store.getters.isClientIdentified) next();
@@ -36,7 +36,7 @@ const routes = [
     },
     {
         path:'/releasenotes',
-        name: 'Release Notes',
+        name: 'release notes',
         component: ReleaseNotes
     }
 ]
@@ -49,9 +49,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'login' && !store.getters.isClientIdentified) {
+    if (to.name !== 'identify client' && !store.getters.isClientIdentified) {
         console.log("client id not identified");
-        next({ name: 'login' });
+        next({ name: 'identify client' });
     }
     // if the user is not authenticated, `next` is called twice
 

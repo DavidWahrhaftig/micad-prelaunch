@@ -1,14 +1,25 @@
 <template>
     <div class="nav__wrapper">
+        <router-link to="/" 
+                class="nav__link"
+                :class="{'nav__link-current': $route.name === 'Select Client'}"
+                tag="a"
+                >Select Client</router-link>
+        <router-link to="/newclient" 
+                class="nav__link"
+                :class="{'nav__link-current': $route.name === 'New Client'}"
+                tag="a"
+                >New Client</router-link>
         <router-link to="/settings" 
                 class="nav__link"
-                :class="{'nav__link-current': $route.name === 'Admin Settings'}"
+                :class="{'nav__link-current': $route.name === 'Admin Settings', 'nav__link-disabled': !$store.getters.clientSelected}"
                 tag="a"
+
                 >Settings</router-link>
         <!-- v-if="this.$route.name != 'settings' " -->
         <router-link to="/users" 
                 class="nav__link"
-                :class="{'nav__link-current': $route.name === 'Visitors IPs'}"
+                :class="{'nav__link-current': $route.name === 'Visitors IPs', 'nav__link-disabled': !$store.getters.clientSelected}"
                 tag="a"
                 >Visitors</router-link>
         <!-- <a  
@@ -17,7 +28,7 @@
         >Client View</a> -->
         <a  
         class="nav__link"
-        href="http://localhost:5000/client"
+        href="http://localhost:8081/"
         >Client View</a>
     </div>
 </template>
@@ -76,6 +87,15 @@ export default {
 
                 &:hover {
                     // color: $color-primary;
+                }
+            }
+            &-disabled {
+                background-color: rgba($color-white, .1);
+                cursor: default;
+                border: 1rem black;
+
+                &:hover {
+                    color: $color-white;
                 }
             }
 

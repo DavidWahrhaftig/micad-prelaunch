@@ -30,8 +30,9 @@ export default Vue.extend({
     async created() {
         if (this.$store.getters.isClientIdentified) {
             await this.fetchClient(this.$store.getters.clientID);
+        } else if (this.$route.name !== 'identify client') {
+            this.$router.push({name: 'identify client'});
         }
-        
     }
     
 });

@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node server/app.js",
     "server": "nodemon server/app.js",
+    "admin": "npm run serve --prefix admin",
     "client": "npm run serve --prefix client",
-    "build-admin-client": "npm run build --prefix admin & npm run build --prefix client",
+    "build-admin-client": "npm run admin & npm run build client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "David Wahrhaftig",

@@ -45,7 +45,7 @@ export default Vue.extend({
     // props: ['userData', 'fetchedUser', 'submitSuccess'],
     computed: {
         ...mapState({
-            email: state => state.email
+            email: state => state.User.email
         }),
         ...mapGetters(['fetchedUser', 'currentIP', 'submitSuccess', 'isEmailValid', 'message']),
         ipAlreadyRecorded() {
@@ -54,7 +54,7 @@ export default Vue.extend({
         }
     },
     watch: {
-        async "$store.state.email"() {
+        async "$store.state.User.email"() {
             if(this.isEmailValid) {
                 console.log("valid email");
                 const res = await axios.get(`/api/users/${this.$store.getters.clientID}/${this.email}`);

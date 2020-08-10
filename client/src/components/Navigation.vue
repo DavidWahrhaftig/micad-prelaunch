@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="nav__wrapper" v-if="$store.getters.isClientIdentified">
+        <div class="nav__wrapper" v-if="$store.getters.clientConfig">
 
             <router-link to="/" 
                         class="nav__link"
@@ -19,7 +19,7 @@
                     tag="a"
                     >Instructions</router-link>
             <a  class="nav__link"
-                :href="$store.state.clientConfig.releaseNotes"
+                :href="$store.getters.clientConfig.releaseNotes"
                 >Release Notes</a>
             <a  class="nav__link"
                 href="https://micad.co.uk/"
@@ -36,9 +36,9 @@
         <div class="nav__wrapper" v-else>
             <router-link to="/login" 
                     class="nav__link"
-                    :class="{'nav__link-current': $route.name == 'login'}"
+                    :class="{'nav__link-current': $route.name == 'identify client'}"
                     tag="a"
-                    >Login</router-link>
+                    >Identify Client</router-link>
         </div>
     </div>
 </template>

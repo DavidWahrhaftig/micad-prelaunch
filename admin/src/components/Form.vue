@@ -1,55 +1,101 @@
 <template>
     <div>
         <form class="form">
+            <!-- header text -->
             <div class="form__group">
-                <label for="text" class="form__label">Welcome Title</label>
+                <label for="header" class="form__label">Header</label>
                 <input type="text" 
                        class="form__input" 
                        placeholder="Welcome Title" 
-                       id="title"
-                       v-model="settings.title" 
+                       id="header"
+                       v-model="client.header" 
                        >
-                
             </div>
+            <!-- welcome text -->
+            <div class="form__group">
+                <label for="welcomeText" class="form__label">Welcome text</label>
+                <input type="text" 
+                       class="form__input" 
+                       placeholder="Welcome Title" 
+                       id="welcomeText"
+                       v-model="client.welcomeText" 
+                       >
+            </div>
+            <!-- instructions text -->
+            <div class="form__group">
+                <label for="instructions" class="form__label">Instructions Text</label>
+                <input type="text" 
+                       class="form__input" 
+                       placeholder="Instructions" 
+                       id="instructions"
+                       v-model="client.instructionsText" 
+                       >
+            </div>
+            <!-- launchdate -->
             <div class="form__group">
                     <label for="date" class="form__label form__label-date">Launchdate</label>
                     <input type="date" 
                         class="form__input" 
                         id="date"
                         :value="toDateString"
-                        @input="settings.launchDate = $event.target.value" 
+                        @input="client.launchDate = $event.target.value" 
                         >
                 
             </div>
-            <div class="form__group u-margin-bottom-big">
-                    <label for="enable" class="form__label form__label-switch">Client page public</label>
+            <!-- public enable switch -->
+            <div class="form__group">
+                    <label for="enable" class="form__label">Client page public</label>
                     <div class="form__switch-container">
-                        <label for="enable" class="form__switch">
+                        <label for="publicEnable" class="form__switch">
                             <input type="checkbox" 
-                                id="enable"
+                                id="publicEnable"
                                 class="form__switch-input"
-                                v-model="settings.enable" 
+                                v-model="client.publicEnable" 
                                 >
                             <span class="form__switch-slider"></span>
                         </label>
                     </div>
             </div>
+            <!-- sso enable switch -->
+            <div class="form__group">
+                    <label for="enable" class="form__label">SSO (on/off)</label>
+                    <div class="form__switch-container">
+                        <label for="ssoEnable" class="form__switch">
+                            <input type="checkbox" 
+                                id="ssoEnable"
+                                class="form__switch-input"
+                                v-model="client.ssoEnable" 
+                                >
+                            <span class="form__switch-slider"></span>
+                        </label>
+                    </div>
+            </div>
+            <!-- releaseNotes url -->
+            <div class="form__group">
+                <label for="releaseNotes" class="form__label">Release Notes link</label>
+                <input type="url" 
+                       class="form__input" 
+                       placeholder="Release Notes link" 
+                       id="releaseNotes"
+                       v-model="client.releaseNotes" 
+                       >
+            </div>
             <!-- URLS inputs -->
             <div class="form__group">
                 <label for="urls" class="form__label">Future URLs</label>    
-                <ul id="urls" class="form__url-list" v-for="(item, i) in settings.urls" :key="i">
+                <ul id="urls" class="form__url-list" v-for="(item, i) in client.urls" :key="i">
                     <li class="form__url-item">
                         <!-- Edit URL input -->
                         <input type="text" 
                             class="form__input form__input-url-title"
                             placeholder="Title"
-                            v-model="settings.urls[i].title"
+                            v-model="client.urls[i].title"
                             id="url" 
                             >
                         <input type="text" 
                             class="form__input form__input-url"
                             placeholder="Edit URL"
-                            v-model="settings.urls[i].url"
+                            v-model="client.urls[i].url"
                             id="url" 
                             >
                         <div class="form__input form__input-control">
@@ -85,13 +131,13 @@
                 </li>
                           
             </div>
-            <!-- Update Button -->
+            <!-- Save Button -->
             <div class="form__group">
                 <button 
                         class="form__btn form__btn-update"
-                        @click="updateAdminSettings"
+                        @click="updateClient(client)"
                         >
-                    Update
+                    Save
                 </button>
             </div>
         </form>
@@ -102,7 +148,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 // import axios from 'axios';
-// import { mapGetters, mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 
 export default Vue.extend({
@@ -114,54 +160,57 @@ export default Vue.extend({
                 launchDate: null,
                 urls: [],
             },
-            newUrl: {title: '', url: ''}
+            newUrl: {title: '', url: ''},
+            client: {}
         }
     },
     computed: {
         toDateString() {
-            if (!this.settings.launchDate) return;
-            return this.settings.launchDate.substring(0,10);
+            if (!this.client.launchDate) return;
+            return this.client.launchDate.substring(0,10);
         }
     },
     methods: {
         removeUrl(index) {
-            this.settings.urls.splice(index, 1);
+            this.client.urls.splice(index, 1);
         },
         addUrl() {
             if (this.newUrl.url == "") return;
-            this.settings.urls.push(this.newUrl);
+            this.client.urls.push(this.newUrl);
             this.newUrl = "";
-        }, 
-        async fetchAdminSettings() {
-            const res = await axios.get('/api/admin');
-            if (res.data.success) {
-                const {
-                    enable,
-                    title,
-                    launchDate,
-                    urls,
-                } = res.data.config
-                this.settings = {enable, title, launchDate, urls};
-            }
         },
-        async updateAdminSettings() {
+        ...mapActions(['updateClient']) 
+        // async fetchAdminSettings() {
+        //     const res = await axios.get('/api/admin');
+        //     if (res.data.success) {
+        //         const {
+        //             enable,
+        //             title,
+        //             launchDate,
+        //             urls,
+        //         } = res.data.config
+        //         this.settings = {enable, title, launchDate, urls};
+        //     }
+        // },
+        // async updateAdminSettings() {
 
-            // filter empty urls
-            this.settings.urls = this.settings.urls.filter(item => item.url.length > 0);
-            // const adminSettings = {
-            //     launchDate
-            // }
-            const res = await axios.put('/api/admin', {adminSettings: this.settings});
-            console.log(res.data.msg);
-            if (res.data.success) {
-                this.$router.push('/');
-            }
-        }
+        //     // filter empty urls
+        //     this.settings.urls = this.settings.urls.filter(item => item.url.length > 0);
+        //     // const adminSettings = {
+        //     //     launchDate
+        //     // }
+        //     const res = await axios.put('/api/admin', {adminSettings: this.settings});
+        //     console.log(res.data.msg);
+        //     if (res.data.success) {
+        //         this.$router.push('/');
+        //     }
+        // }
     },
 
-    async created() {
+    created() {
         console.log("created")
-        await this.fetchAdminSettings();
+        // await this.fetchAdminSettings();
+        this.client = this.$store.getters.clientSelected;
     }
 });
 </script>
@@ -190,7 +239,9 @@ export default Vue.extend({
         }
 
         &__group:not(:last-child) {
+            // display: block;
             margin-bottom: 1.5rem;
+            
         }
 
         &__switch-container {
@@ -445,6 +496,12 @@ export default Vue.extend({
             outline: none;
 
             transition: all 0.3s;
+
+            @include respond(tab-land) {
+                font-size: 1.5rem;
+                padding: 0.5rem 2rem;
+                width: 50%;
+            }
 
             &-update {
                 width: 100%;

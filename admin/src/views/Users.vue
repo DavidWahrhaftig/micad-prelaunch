@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h3 v-if="users.length == 0">No visitors have registered</h3>
         <ul class="ip__list u-margin-bottom-big">
             <li class="ip__item" v-for="({ip, email}, i) in ips" :key="i">{{ ip }} <span class="ip__item--email">{{email}}</span> </li>
         </ul>
@@ -8,24 +9,14 @@
 
 <script>
 import Vue from 'vue';
-import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default Vue.extend({
-    data() {
-        return {
-            users: []
-        }
-    },
-    methods: {
-        async fetchUsers() {
-            const res = await axios.get('/api/admin/users');
-            if (res.data.success) {
-                this.users = res.data.users;
-            }
-        }
-    },
+    // methods: {
+    //     ...mapActions(['fetchUsers'])
+    // },
     computed: {
-
+        ...mapGetters(['users']),
         ips() {
             return [].concat(...this.users.map(user => {
                 // const user = {email: user.email, ips: user.ips}
@@ -35,9 +26,9 @@ export default Vue.extend({
             }));
         }
     },
-    async created() {
-        await this.fetchUsers();
-    }
+    // async created() {
+    //     await this.fetchUsers(this.$store.getters.clientSelected._id);
+    // }
 });
 </script>
 

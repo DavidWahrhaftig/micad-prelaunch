@@ -4,6 +4,23 @@ const router = express.Router();
 const User = require('../../model/User');
 const Client = require('../../model/Client');
 
+// GET all clients
+router.get('/clients', (req, res) => {
+    Client.find()
+        .then(clients => {
+            res.status(200).json({
+                success: true,
+                clients,
+                msg: 'Get all clients'
+            });
+        }).catch(err => {
+            res.status(404).json({
+                success: false,
+                msg: err.message
+            });
+        });
+});
+
 // Get admin settings of a client - api/admin/:clientID
 router.get('/:clientID', (req, res) => {
     Client.findById(req.params.clientID)
@@ -42,7 +59,7 @@ router.post('/', (req, res) => {
 router.put('/:clientID', (req, res) => {
     // let adminSettings = req.body.adminSettings;
     // adminSettings.launchDate = new Date(adminSettings.launchDate);
-    Client.findByIdAndUpdate(req.params.clientID, req.body.adminSettings)
+    Client.findByIdAndUpdate(req.params.clientID, req.body)
         .then(client => {
             res.status(201).json({
                 success: true,
@@ -71,6 +88,22 @@ router.get('/:clientID/users', (req, res) => {
                 msg: err.message
             });
         });
+});
+
+router.get('/nameExist/:clientName', (req,res) => {
+    Client.findOne({clientName: req.params.clientName}).then(client => {
+        res.status(200).json({
+            success: true,
+            client,
+            isExisting: false,
+            msg: 'This client name already exists'
+        });
+    }).catch(err => {
+        res.status(404).json({
+            success: false,
+            msg: err.message
+        });
+    });
 });
 
 

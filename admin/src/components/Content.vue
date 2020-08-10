@@ -3,7 +3,9 @@
         <div class="heading-primary--sub u-margin-bottom-small">
             {{$route.name}}
         </div>
-        <router-view></router-view>
+        <keep-alive include="SelectClient">
+            <router-view></router-view>
+        </keep-alive>
     </div>
 </template>
 

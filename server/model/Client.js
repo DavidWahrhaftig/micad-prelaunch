@@ -20,6 +20,7 @@ const ClientSchema = new mongoose.Schema(
         // },
         clientName: {
             type: String,
+            unique: true,
             required: true
         },
         launchDate: {
