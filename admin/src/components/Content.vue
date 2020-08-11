@@ -26,7 +26,7 @@ export default Vue.extend({
             }
         },
         clientDisplay() {
-            if (this.$store.getters.clientSelected) return `Client: ${this.$store.getters.clientSelected.clientName}`;
+            // if (this.$store.getters.clientSelected && this.$route.path != '/') return `Client: ${this.$store.getters.clientSelected.clientName}`;
             return '';
         },
         clientName() {
