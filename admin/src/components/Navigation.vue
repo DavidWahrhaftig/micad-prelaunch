@@ -22,14 +22,14 @@
                 :class="{'nav__link-current': $route.name === 'Visitors IPs', 'nav__link-disabled': !$store.getters.clientSelected}"
                 tag="a"
                 >Visitors</router-link>
-        <!-- <a  
-        class="nav__link"
-        href="https://micad-prelaunch.herokuapp.com/client"
-        >Client View</a> -->
         <a  
         class="nav__link"
-        href="http://localhost:8081/"
+        href="https://micad-prelaunch.herokuapp.com/client"
         >Client View</a>
+        <!-- <a  
+        class="nav__link"
+        href="http://localhost:8081/"
+        >Client View</a> -->
     </div>
 </template>
 
