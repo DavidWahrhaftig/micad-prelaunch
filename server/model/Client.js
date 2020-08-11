@@ -39,7 +39,6 @@ const ClientSchema = new mongoose.Schema(
             type: Array,
             'default': [
                 {title: 'ipr', url: 'https://bradfordhospitals.micadipr.net/'},
-                {title: 'accounts', url: 'https://accounts-bradfordhospitals.micadipr.net/'},
                 {title: 'authsrv', url: 'https://authsrv-bradfordhospitals.micadipr.net/'},
                 {title: 'mac', url: 'https://mac-bradfordhospitals.micadipr.net/'},
                 {title: 'audit-trail', url: 'https://audit-trail-bradfordhospitals.micadipr.net/'}]
@@ -47,6 +46,10 @@ const ClientSchema = new mongoose.Schema(
         releaseNotes: {
             type: String,
             default: 'http://www.updates.micadipr.net/ReleaseNotes/IPR/iprGAReleaseNotes_3_6_0.pdf'
+        },
+        authUrl: {
+            type: String,
+            default: 'https://accounts-bradfordhospitals.micadipr.net/'
         },
         header: {
             type: String,

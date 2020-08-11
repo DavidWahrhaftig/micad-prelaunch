@@ -35,7 +35,7 @@ export default Vue.extend({
         } 
     },
     methods: {
-        ...mapActions(['createClient', 'doesClientNameExist'])
+        ...mapActions(['createClient', 'doesClientNameExist', 'deselectClient'])
     },
     watch: {
         async clientName(newVal, oldVal) {
@@ -49,6 +49,10 @@ export default Vue.extend({
             }
         }
     },
+    created(){
+        this.deselectClient();
+        console.log('deselct client');
+    }
 });
 </script>
 

@@ -14,7 +14,7 @@
                 <h2>Client ID to share with users:</h2>
                 <h2 class="highlight">{{seletectedClient._id}}</h2>
             </div>
-            <div class="form__group u-margin-top-small">
+            <div class="form__group u-margin-top-small" v-if="$store.getters.clientSelected">
                 <button class="form__btn" @click="goToSettings">
                     Go to Settings
                 </button>
@@ -55,11 +55,12 @@ export default Vue.extend({
             }
             else {
                 console.log('cant set client');
+                this.deselectClient();
             }
         }
     },
     methods: {
-        ...mapActions(['fetchClients', 'chooseClient']),
+        ...mapActions(['fetchClients', 'chooseClient', 'deselectClient']),
         // selectClient() {
         //     if (this.seletectedClient) {
         //         this.chooseClient(this.seletectedClient);

@@ -43,7 +43,7 @@
                 
             </div>
             <!-- public enable switch -->
-            <div class="form__group">
+            <div class="form__group form__group-switch">
                     <label for="enable" class="form__label">Client page public</label>
                     <div class="form__switch-container">
                         <label for="publicEnable" class="form__switch">
@@ -57,7 +57,7 @@
                     </div>
             </div>
             <!-- sso enable switch -->
-            <div class="form__group">
+            <div class="form__group form__group-switch">
                     <label for="enable" class="form__label">SSO (on/off)</label>
                     <div class="form__switch-container">
                         <label for="ssoEnable" class="form__switch">
@@ -78,6 +78,16 @@
                        placeholder="Release Notes link" 
                        id="releaseNotes"
                        v-model="client.releaseNotes" 
+                       >
+            </div>
+            <!-- auth url -->
+            <div class="form__group">
+                <label for="authUrl" class="form__label">Authentication URL</label>
+                <input type="url" 
+                       class="form__input" 
+                       placeholder="URL" 
+                       id="authUrl"
+                       v-model="client.authUrl" 
                        >
             </div>
             <!-- URLS inputs -->
@@ -241,18 +251,25 @@ export default Vue.extend({
         &__group:not(:last-child) {
             // display: block;
             margin-bottom: 1.5rem;
-            
+        }
+
+        &__group {
+            &-switch {
+                display: flex;
+                justify-content: space-between;
+            }
         }
 
         &__switch-container {
-            display:inline-block;
+            // display:inline-block;
             height: 4rem;
             width: 7rem;
-            float: right;
+            // float: right;
+            justify-self: right;
 
             
-            @include respond(desktop) {
-                transform: scale(1.2);
+            @include respond(tab-land) {
+                transform: scale(0.9);
                 // margin-right: 3rem;
             }
         }
@@ -443,8 +460,9 @@ export default Vue.extend({
 
 
             // float:left;
-            &-switch, &-date {
-                float:left;
+            &-switch {
+                display:inline-block;
+                // float:left;
                 // margin:
             }
         }

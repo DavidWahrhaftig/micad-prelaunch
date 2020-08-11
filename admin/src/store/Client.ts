@@ -87,6 +87,9 @@ const actions = {
     async chooseClient({commit, dispatch}: any, client: any) {
         commit('setClientSelected', client);
         await dispatch('fetchUsers', client._id);
+    },
+    deselectClient({commit}: any) {
+        commit('setClientSelected', null);
     }
 }
 
