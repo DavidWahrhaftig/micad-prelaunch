@@ -1,10 +1,7 @@
 .form {
-    width: 36rem;  
+    // width: 36rem;  
+    width: 100%;  
     margin: 0 auto;
-
-    &__group:not(:last-child) {
-        margin-bottom: 0.5rem;
-    }
 
     @include respond(tab-port) {
         width: 80%;
@@ -12,31 +9,105 @@
     }
 
     @include respond(tab-land) {
-        width: 65%;
+        // width: 65%;
     }
 
     @include respond(desktop) {
-        width: 60%;
+        // width: 60%;
     }
+
+    &__group {
+        &:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+
+        &--switch {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+    }
+
+    &__switch-container {
+        // display:inline-block;
+        height: 4rem;
+        width: 7rem;
+        // float: right;
+        justify-self: right;
+
+        
+        @include respond(tab-land) {
+            transform: scale(0.9);
+            // margin-right: 3rem;
+        }
+    }
+    &__switch {
+        position: relative;
+        display: inline-block;
+        // right: -6rem;
+        // bottom: -3.5rem;
+        width: 55px;
+        height: 30px;
+        // margin-right: 5rem;
+        // transform: scale(0.5);
+        // float: inline-end;
+
+        // toggle area
+        &-slider {
+            position: absolute; 
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: $color-grey-dark-2;
+            transition: .4s;
+            border-radius: 5rem;
+
+            // toggle circle
+            &::before {
+                position: absolute;
+                content: "";
+                height: 24px;
+                width: 24px;
+                left: 3.5px;
+                bottom: 3px;
+                background-color: $color-white;
+                transition: 0.4s;
+                border-radius: 50px;
+            }
+        }
+
+        & &-input {display: none}
+
+        &-input:checked + &-slider {
+            background-color: $color-secondary;
+        }
+
+        &-input:checked + &-slider::before {
+            transform: translateX(24px);
+        }
+    }
+
 
     &__label {
         font-size: 1.8rem;
         font-weight: bold;
-        // margin-left: 2rem; // same position as placeholder of input
-        // margin-top: 0.7rem;
-        display: block; // in order to use margin properties
-        transition: all 0.4s;
-        transform: translateY(-9rem);
         text-align: left;
         padding-left: 2rem;
+        margin-bottom: 1rem;
+        display: block; // in order to use margin properties
+        transition: all 0.4s;
+        // transform: translateY(-9rem);
+        
     }
 
     &__input {
         font-size: 2rem;
         font-family: inherit; // to overwright the browser default
         color: inherit;
-        padding: 1.5rem 2rem; //more paddings on the sides of input and buttons is a nicer style
-        border-radius: 0.2rem; 
+        padding: 1rem 1.5rem; //more paddings on the sides of input and buttons is a nicer style
+        border-radius: $edge-roundness; 
         background-color: rgba($color-white, .5);
         border: none;
         border-bottom: 0.5rem solid transparent;
@@ -45,6 +116,7 @@
         transition: all 0.3s;
         @include respond(tab-land) {
             font-size: 1.5rem;
+            padding: 1rem 2rem;
         }
 
         &:focus {
@@ -60,20 +132,105 @@
         &::-webkit-input-placeholder {
             color: $color-grey-dark-2;
         }
+
+        &-url {
+            width: 40%;
+            // display: flex;
+            margin-right: auto;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            &-add {
+                background-color: rgba($color-primary, .15);
+                outline-color: $color-primary;
+            }
+
+            @include respond(tab-port) {
+                width: 50%;
+            }
+            @include respond(desktop) {
+                width: 60%;
+            }
+        }
+        &-url-title {
+            width: 35%;
+            margin-right: auto;
+            // display: flex;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            &-add {
+                width: 35%;
+                margin-right: auto;
+                // display: flex;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                background-color: rgba($color-primary, .15);
+                outline-color: $color-primary;
+                @include respond(tab-port) {
+                    width: 25%;
+                }
+            }
+
+            @include respond(tab-port) {
+                width: 25%;
+            }
+        }
+
+        &-control {
+            width: 15%;
+            display: flex;
+            // margin-left: 10%;
+            padding: 0;
+            border-top-right-radius: $edge-roundness;
+            border-bottom-right-radius:$edge-roundness;
+            // float: right;
+
+            @include respond(tab-port) {
+                width: 6rem;
+                margin-left: auto;
+            }
+
+            &-btn {
+                // height: 100%;
+                width: 100%;
+                padding: 0;
+                border: none;
+                font-size: 3.6rem;
+                font-family: inherit; 
+                border-top-right-radius: $edge-roundness;
+                border-bottom-right-radius: $edge-roundness;
+                cursor: pointer;
+
+                transition: all 0.3s;
+                
+                background-color: #777;
+                color: white;
+                &--remove {
+                    background-color: $color-tertiary-dark;
+                    
+                }
+                &--add{
+                    background-color: $color-primary;
+                    
+                }
+
+                &:hover {
+                    background-color: $color-secondary;
+                }
+                
+            }
+        }
+
     }
 
     // when placeholder is showing meaning nothing is being written, need to hide label
-    &__input:placeholder-shown +  &__label{ // + adjacent sibiling selector, ~ general sibiling selector
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-4rem);
+    // &__input:placeholder-shown +  &__label{ // + adjacent sibiling selector, ~ general sibiling selector
+    //     opacity: 0;
+    //     visibility: hidden;
+    //     transform: translateY(-4rem);
 
-    }
+    // }
 
     &__btn {
-        // background-color: $color-primary;
-        // color: $color-white;
-        // border: none;
         color: $color-white;
         background-color: $color-primary;
         border: 0.3rem solid $color-primary;
@@ -92,16 +249,28 @@
         outline: none;
 
         transition: all 0.3s;
-
-        &-submit {
-            width: 100%;
-            @include respond(tab-land) {
-                font-size: 1.5rem;
-                width: 25rem;
-                padding: 1rem 3rem;
-            }
-            
+        
+        width: 100%;
+        @include respond(tab-port) {
+            font-size: 1.8rem;
+            width: 40rem;
+            padding: 1.5rem 2rem;
         }
+        @include respond(tab-land) {
+            font-size: 1.5rem;
+            width: 25rem;
+            padding: 1rem 2rem;
+        }
+
+        // &-submit {
+        //     width: 100%;
+        //     @include respond(tab-land) {
+        //         font-size: 1.5rem;
+        //         width: 25rem;
+        //         padding: 1rem 3rem;
+        //     }
+            
+        // }
         &-overwrite {
             width: 48%;
             margin: 0 0 0 2%;
@@ -119,6 +288,56 @@
             background-color: $color-secondary;
             border-color: $color-secondary;
         }
+
+        &-url {
+            // font-size: 3rem;
+            // margin-left: 10%;
+            // margin-top: 1rem;
+            padding: 0rem 1rem;
+            height: 100%;
+            width: 15%;
+            position: relative;
+
+            &-add {
+                background-color: $color-secondary;
+                border: 0.3rem solid $color-secondary;
+                color: $color-white;
+                // position: relative;
+                // // margin-top: 3.5rem;
+                // content: "";
+                // display: inline-block;
+                // clear: both;
+                // background-color: $color-primary;
+                // width: 10%;
+            
+                &::after {
+                    content: '+';
+                    // position: absolute;
+                    // // top: 50%;
+                    // // left: 50%;
+                    // // transform: translate(-50%, -50%);
+                    // margin-left: 2rem;
+                    // width: 4rem;
+                    // height: 0.5rem;
+                    // background-color: $color-white;
+                    // display: inline-block;
+                    // content: "";
+                    
+                    // left: 0;
+                    // transition: all 0.2s;
+                    // // transform: rotate(90deg);
+                }
+            }
+
+            &-remove {
+                background-color: $color-tertiary-dark;
+                border-color: $color-tertiary-dark;
+                color: $color-white;
+                &::after {
+                    content: '-';
+                }
+            }
+        }
     }
 
     &__message {
@@ -127,6 +346,54 @@
         color: $color-secondary-dark;
         &--invalid {
             color: $color-tertiary-dark;
+        }
+    }
+
+    &__url {
+        &-list {
+            list-style-type: none;
+        }
+        &-item {
+            margin-bottom: 1rem;
+            // text-decoration: none;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            // justify-content: center; 
+            // align-items: stretch; 
+
+            &:hover {
+                background-color: papayawhip;
+            }
+        }
+    }
+
+    &__select {
+        // width: 50%;
+        width: 100%;
+        border: none;
+        // padding: 0.5rem 1em;
+        padding: 1rem 1em;
+        border-radius: 0.3rem;
+        font-size: 1.8rem;
+
+        @include respond(tab-port) {
+            width: 75%;
+        }
+
+        @include respond(tab-land) {
+            padding: 0.5rem 1em;
+            width: 50%;
+        }
+        &:hover {
+            background-color: $color-secondary;
+            color: $color-primary;
+        }
+        &:focus {
+            // outline-color: $color-secondary;
+            outline: none;
+            background-color: $color-primary;
+            color: $color-white;
         }
     }
 }

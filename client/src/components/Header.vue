@@ -5,8 +5,8 @@
         </div>
         <div class="header__title" >
         
-            <div class="header__title--main" v-if="$store.state.clientConfig">
-                {{$store.state.clientConfig.header}}
+            <div class="header__title--main" v-if="$store.getters.clientConfig">
+                {{$store.getters.clientConfig.header}}
             </div>
             <div class="header__title--main" v-else>
                 Pre-launch, Client not Identified

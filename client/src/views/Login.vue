@@ -3,13 +3,14 @@
         <!-- Enter client ID -->
         <form class="form" action="#">
             <div class="form__group">
+                <!-- <label for="clientID" class="form__label">Client ID</label> -->
                 <input type="text" 
                        class="form__input" 
                        placeholder="Client ID" 
                        id="clientID"
                        v-model="clientID"
                        required>
-                <label for="clientID" class="form__label">Client ID</label>
+                
             </div>
             <button class="form__btn form__btn-submit" @click.prevent="fetchClient(clientID)" >
                 Submit

@@ -2,6 +2,7 @@
     <div>
         <form @submit.prevent action="#" class="form">
             <div class="form__group">
+                <!-- <label for="email" class="form__label">Email address</label> -->
                 <input type="email" 
                        class="form__input" 
                        placeholder="Email address" 
@@ -9,7 +10,7 @@
                        :value="email" @input="setEmail($event.target.value)"
                        :disabled="submitSuccess"
                        required>
-                <label for="email" class="form__label">Email address</label>
+                
             </div>
             <div class="form__group" v-if="!ipAlreadyRecorded && !submitSuccess">
                 <button @click="createUser" 

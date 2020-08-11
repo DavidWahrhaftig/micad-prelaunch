@@ -27,7 +27,7 @@ html {
     }
     // width > 1800?
     @include respond(big-desktop) { // media query mixin
-        // font-size: 65%; // 1 rem = 12px, 12/16
+        font-size: 65%; // 1 rem = 12px, 12/16
     }
 }
 

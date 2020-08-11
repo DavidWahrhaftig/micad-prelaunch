@@ -43,7 +43,7 @@
                 
             </div>
             <!-- public enable switch -->
-            <div class="form__group form__group-switch">
+            <div class="form__group form__group--switch">
                     <label for="enable" class="form__label">Client page public</label>
                     <div class="form__switch-container">
                         <label for="publicEnable" class="form__switch">
@@ -57,7 +57,7 @@
                     </div>
             </div>
             <!-- sso enable switch -->
-            <div class="form__group form__group-switch">
+            <div class="form__group form__group--switch">
                     <label for="enable" class="form__label">SSO (on/off)</label>
                     <div class="form__switch-container">
                         <label for="ssoEnable" class="form__switch">
@@ -144,7 +144,7 @@
             <!-- Save Button -->
             <div class="form__group">
                 <button 
-                        class="form__btn form__btn-update"
+                        class="form__btn"
                         @click="updateClient(client)"
                         >
                     Save
@@ -227,7 +227,7 @@ export default Vue.extend({
 
 <style lang="scss">
 
-    .form {
+    .form-old {
         width: 100%; 
         margin: 0 auto;
 
@@ -326,7 +326,7 @@ export default Vue.extend({
             font-size: 2rem;
             font-family: inherit; // to overwright the browser default
             color: inherit;
-            padding: 0.75rem 1rem; //more paddings on the sides of input and buttons is a nicer style
+            padding: 1rem 1.5rem; //more paddings on the sides of input and buttons is a nicer style
             border-radius: $edge-roundness; 
             background-color: rgba($color-white, .5);
             border: none;
@@ -335,17 +335,6 @@ export default Vue.extend({
             display: block;
             transition: all 0.3s;
             outline-color: $color-secondary;
-
-
-            // &:focus {
-            //     outline: none;
-            //     box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
-            //     border-bottom: 0.5rem solid $color-secondary;
-            // }
-
-            // &:focus:invalid {
-            //     border-color: $color-tertiary-dark;
-            // }
 
             @include respond(tab-port) {
                 font-size: 1.5rem;
@@ -458,13 +447,6 @@ export default Vue.extend({
             transition: all 0.4s;
             // transform: translateY(-9rem);
 
-
-            // float:left;
-            &-switch {
-                display:inline-block;
-                // float:left;
-                // margin:
-            }
         }
         
         /*
@@ -492,9 +474,6 @@ export default Vue.extend({
         // }
 
         &__btn {
-            // background-color: $color-primary;
-            // color: $color-white;
-            // border: none;
             color: $color-white;
             background-color: $color-primary;
             border: 0.3rem solid $color-primary;

@@ -75,28 +75,29 @@ export default Vue.extend({
     },
     async created(){
         await this.fetchClients();
+        this.deselectClient();
         
     }
 });
 </script>
 
 <style lang="scss">
-    .form__select {
-        width: 50%;
-        border: none;
-        padding: 0.5rem 1em;
-        border-radius: 0.3rem;
-        &:hover {
-            background-color: $color-secondary;
-            color: $color-primary;
-        }
-        &:focus {
-            // outline-color: $color-secondary;
-            outline: none;
-            background-color: $color-primary;
-            color: $color-white;
-        }
-    }
+    // .form__select {
+    //     width: 50%;
+    //     border: none;
+    //     padding: 0.5rem 1em;
+    //     border-radius: 0.3rem;
+    //     &:hover {
+    //         background-color: $color-secondary;
+    //         color: $color-primary;
+    //     }
+    //     &:focus {
+    //         // outline-color: $color-secondary;
+    //         outline: none;
+    //         background-color: $color-primary;
+    //         color: $color-white;
+    //     }
+    // }
 
     .highlight {
         display: inline-block;
