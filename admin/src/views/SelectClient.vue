@@ -14,11 +14,11 @@
                 <h2>Client ID to share with users:</h2>
                 <h2 class="highlight">{{seletectedClient._id}}</h2>
             </div>
-            <div class="form__group u-margin-top-small" v-if="$store.getters.clientSelected">
-                <button class="form__btn" @click="goToSettings">
+            <!-- <div class="form__group u-margin-top-small" v-if="$store.getters.clientSelected">
+                <button class="button" @click="goToSettings">
                     Go to Settings
                 </button>
-            </div>
+            </div> -->
             
             
         </form>

@@ -1,7 +1,9 @@
 <template>
     <div v-if="$store.state.Client.clientConfig">
         <!-- <div class="message">Welcome text set by Admin</div> -->
-        <h1>Hello <span class="client-name">{{$store.state.Client.clientConfig.clientName}}</span> user</h1>
+        <h1>Hello <span class="client-name">{{$store.getters.clientConfig.clientName}}</span> user</h1>
+        <p class="message">{{ $store.getters.clientConfig.welcomeText }}</p>
+
         <app-countdown 
             v-if="$store.state.Client.clientConfig"
             :launchDate="new Date($store.state.Client.clientConfig.launchDate)" 

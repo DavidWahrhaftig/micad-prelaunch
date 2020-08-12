@@ -3,21 +3,27 @@
         
         <h1 class="countdown" v-if="isLaunched">Your micad system was Launched on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
         <h1 class="countdown" v-else><span class="countdown__days">{{remainingDays}}</span> days to launch date on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
+        
+        
+        <div class="url-grid-auth u-margin-bottom-small">
+            <div class="url-grid__item url-grid__item--title">auth URL:</div>
+            <a class="url-grid__item url-grid__item--url" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
+            <div>Verify <input type="checkbox" v-model="verified"/></div>
+        </div>
+    
         <div>
             <h3 class="heading-primary--sub" v-if="isLaunched">Your URLs are:</h3>
             <h3 class="heading-primary--sub" v-else>Your URLs will be:</h3>
             
         </div>
-        <!-- <ul class="url__list">
-            <li class="url__item" v-for="(item, i) in urls" :key="i"><span class="url__item-title">{{item.title}}:</span> <a class="url__link">{{item.url}}</a></li>
-        </ul> -->
 
-        <div class="url-container">
-            <div class="url-grid" v-for="(item, i) in urls" :key="i">
-                <div class="url-grid__item url-grid__item--title">{{ item.title }}:</div>
-                <a class="url-grid__item url-grid__item--url">{{ item.url }}</a>
-            </div>
+       
+        <div class="url-grid" v-for="(item, i) in urls" :key="i">
+            <div class="url-grid__item url-grid__item--title">{{ item.title }}:</div>
+            <a class="url-grid__item url-grid__item--url">{{ item.url }}</a>
         </div>
+        
+        
         
     </div>
 </template>
@@ -27,6 +33,11 @@ import Vue from 'vue';
 
 export default Vue.extend({
     props: ['launchDate', 'urls'],
+    data() {
+        return {
+            verified: false
+        }
+    },
     computed:{
         prettyLaunchDate(){
             return `${this.monthOfLaunchDate} ${this.launchDate.getDate()}, ${this.launchDate.getFullYear()}`;
@@ -79,23 +90,34 @@ export default Vue.extend({
         
     }
 
-    .url-container {
+    .url-grid {
         margin: 0 auto;
         width: 40rem;
-
-        @include respond(tab-land) {
-            width: 60rem;
-        }
-
-    }
-    .url-grid {
         display: grid;
         grid-template-columns: 8rem 35rem;
         // grid-template-areas: title url;
         justify-items: start;
 
         @include respond(tab-land) {
-            grid-template-columns: 10rem 45rem;
+            width: 60rem;
+            grid-template-columns: 10rem 50rem;
+        }
+
+        &-auth {
+            margin: 0 auto;
+            width: 40rem;
+            display: grid;
+            // grid-template-columns: 8rem 35rem 5rem;
+            grid-template-columns: 25% 55% 20%;
+            justify-items: start;
+            @include respond(tab-port) {
+                width: 40rem;
+                grid-template-columns: 8rem 35rem 5rem;
+            }
+            @include respond(tab-land) {
+                width: 60rem;
+                grid-template-columns: 10rem 40rem 10rem;
+            }
         }
 
         &__item {

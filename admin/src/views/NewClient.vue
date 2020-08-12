@@ -10,10 +10,10 @@
                        >
             </div>
              <div class="form__group" v-if="!isNameValid">
-                <div class="form__message form__message--invalid">Name already exists</div>
+                <div class="alert alert--invalid">Name already exists</div>
             </div>
             <div class="form__group">
-                <button class="form__btn" @click="createClient(clientName)">
+                <button :disabled="!isNameValid" class="button" @click="createClient(clientName)">
                     Create
                 </button>
             </div>            
@@ -39,13 +39,15 @@ export default Vue.extend({
     },
     watch: {
         async clientName(newVal, oldVal) {
+            if(newVal == '') return; 
+            
             const valid = await this.doesClientNameExist(newVal);
             
             if(valid) {
+                this.isNameValid = true;
+            } else {
                 console.log("client Name already exists");
                 this.isNameValid = false;
-            } else {
-                this.isNameValid = true;
             }
         }
     },

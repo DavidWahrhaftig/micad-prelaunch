@@ -43,6 +43,10 @@ const actions = {
     },
     async createClient({commit, dispatch}: any, clientName: string) {
         try {
+            if (clientName == '') {
+                console.log('name is empty');
+                return;
+            }
             const res = await axios.post('/api/admin/', {clientName: clientName});
             if (res.data.success) {
                 await dispatch('fetchClients');
@@ -54,11 +58,8 @@ const actions = {
     },
     async doesClientNameExist({commit}: any, clientName: string) {
         try {
-            const res = await axios.get(`/api/admin/nameExist/${clientName}`);
-            if (res.data.success) {
-                if (res.data.client) return true;
-                return false;
-            }
+            const res = await axios.get(`/api/admin/nameValid/${clientName}`);
+            return res.data.unique;
         } catch(err) {
             console.log(err);
         }
@@ -68,10 +69,12 @@ const actions = {
             const res = await axios.put(`/api/admin/${modifiedClient._id}`, modifiedClient);
             if (res.data.success) {
                 await dispatch('fetchClients');
+                return true;
             }
         }
         catch(err) {
             console.log(err);
+            return false;
         }
     },
     async fetchUsers({commit}: any, clientID: string) {

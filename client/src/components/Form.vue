@@ -14,23 +14,23 @@
             </div>
             <div class="form__group" v-if="!ipAlreadyRecorded && !submitSuccess">
                 <button @click="createUser" 
-                        class="form__btn form__btn-submit"
+                        class="button"
                         v-if="!fetchedUser">
                     Submit
                 </button>
                 <div v-else>
-                    <button class="form__btn form__btn-add"
+                    <button class="button button-add"
                             @click="updateUser(false)">
                         Add IP
                     </button>
-                    <button class="form__btn form__btn-overwrite"
+                    <button class="button button-overwrite"
                             @click="updateUser(true)">
                         Overwrite IPS
                     </button> 
                 </div>
             </div>
             <div class="form__group" v-else>
-                <div class="form__message" :class="{'form__message--invalid': ipAlreadyRecorded}">{{ message }}</div>
+                <div class="alert alert--success" :class="{'alert--invalid': ipAlreadyRecorded}">{{ message }}</div>
             </div>
         </form>
     </div>

@@ -90,13 +90,25 @@ router.get('/:clientID/users', (req, res) => {
         });
 });
 
-router.get('/nameExist/:clientName', (req,res) => {
-    Client.findOne({clientName: req.params.clientName}).then(client => {
+router.get('/nameValid/:clientName', (req,res) => {
+    // Client.findOne({clientName: req.params.clientName}).then(client => {
+    //     res.status(200).json({
+    //         success: true,
+    //         client,
+    //         isExisting: false,
+    //         msg: 'This client name already exists'
+    //     });
+    Client.find({}).then(clients => {
+        const result = clients.filter(client => {
+            const clientNameLower = client.clientName.toLowerCase();
+            return req.params.clientName.toLowerCase() == clientNameLower;
+        });
+
+        const unique = (result.length == 0);
         res.status(200).json({
             success: true,
-            client,
-            isExisting: false,
-            msg: 'This client name already exists'
+            unique,
+            msg: 'Client exist check'
         });
     }).catch(err => {
         res.status(404).json({

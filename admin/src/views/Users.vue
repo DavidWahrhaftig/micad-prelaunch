@@ -26,9 +26,10 @@ export default Vue.extend({
             }));
         }
     },
-    // async created() {
-    //     await this.fetchUsers(this.$store.getters.clientSelected._id);
-    // }
+    async created() {
+        // await this.fetchUsers(this.$store.getters.clientSelected._id);
+        console.log('created');
+    }
 });
 </script>
 

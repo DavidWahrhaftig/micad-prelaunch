@@ -14,22 +14,32 @@
             <!-- welcome text -->
             <div class="form__group">
                 <label for="welcomeText" class="form__label">Welcome text</label>
-                <input type="text" 
+                <!-- <input type="text" 
                        class="form__input" 
                        placeholder="Welcome Title" 
                        id="welcomeText"
                        v-model="client.welcomeText" 
-                       >
+                       > -->
+                <textarea class="form__input" 
+                       placeholder="Welcome Title" 
+                       id="welcomeText"
+                       rows="4"
+                       v-model="client.welcomeText"></textarea>
             </div>
             <!-- instructions text -->
             <div class="form__group">
                 <label for="instructions" class="form__label">Instructions Text</label>
-                <input type="text" 
+                <!-- <input type="text" 
                        class="form__input" 
                        placeholder="Instructions" 
                        id="instructions"
                        v-model="client.instructionsText" 
-                       >
+                       > -->
+                <textarea class="form__input" 
+                       placeholder="Instructions" 
+                       id="instructions"
+                       rows="4"
+                       v-model="client.instructionsText"></textarea>
             </div>
             <!-- launchdate -->
             <div class="form__group">
@@ -90,6 +100,7 @@
                        v-model="client.authUrl" 
                        >
             </div>
+            
             <!-- URLS inputs -->
             <div class="form__group">
                 <label for="urls" class="form__label">Future URLs</label>    
@@ -97,23 +108,27 @@
                     <li class="form__url-item">
                         <!-- Edit URL input -->
                         <input type="text" 
-                            class="form__input form__input-url-title"
+                            class="form__input form__url-title"
                             placeholder="Title"
                             v-model="client.urls[i].title"
                             id="url" 
                             >
                         <input type="text" 
-                            class="form__input form__input-url"
+                            class="form__input form__url-path"
                             placeholder="Edit URL"
                             v-model="client.urls[i].url"
                             id="url" 
                             >
-                        <div class="form__input form__input-control">
+                        <!-- <div class="form__input form__input-control">
                             <button class="form__input-control-btn form__input-control-btn--remove"
                                     @click.prevent="removeUrl(i)">
                                 -
                             </button> 
-                        </div>
+                        </div> -->
+                        <button class="button button-url button-url--remove"
+                                @click.prevent="removeUrl(i)"> 
+                            - 
+                        </button>
 
                     </li>
                    
@@ -121,31 +136,35 @@
                 <!-- Add URL input -->
                 <li class="form__url-item">
                     <input type="text" 
-                       class="form__input form__input-url form__input-url-title-add" 
+                       class="form__input form__url-title form__url-title-add" 
                        placeholder="Title"
                        id="url"
                        v-model="newUrl.title" 
                        > 
                     <input type="text" 
-                       class="form__input form__input-url form__input-url-add" 
+                       class="form__input form__url-path form__url-path-add" 
                        placeholder="Add URL"
                        id="url"
                        v-model="newUrl.url" 
                        > 
-                    <div class="form__input form__input-control">
+                    <!-- <div class="form__input form__input-control">
                         <button class="form__input-control-btn form__input-control-btn--add"
                                 @click.prevent="addUrl()">
                             +
                         </button> 
-                    </div>
+                    </div> -->
+                    <button class="button button-url button-url--add"
+                            @click.prevent="addUrl()"> 
+                        + 
+                    </button>
                 </li>
                           
             </div>
             <!-- Save Button -->
             <div class="form__group">
                 <button 
-                        class="form__btn"
-                        @click="updateClient(client)"
+                        class="button"
+                        @click="submitForm"
                         >
                     Save
                 </button>
@@ -189,7 +208,11 @@ export default Vue.extend({
             this.client.urls.push(this.newUrl);
             this.newUrl = "";
         },
-        ...mapActions(['updateClient']) 
+        ...mapActions(['updateClient']),
+        async submitForm() {
+            const success = await this.updateClient(this.client);
+            this.$emit('submitted', success);
+        }
         // async fetchAdminSettings() {
         //     const res = await axios.get('/api/admin');
         //     if (res.data.success) {

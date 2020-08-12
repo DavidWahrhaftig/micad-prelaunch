@@ -1,0 +1,72 @@
+.button {
+    width: 100%;
+    color: $color-white;
+    background-color: $color-primary;
+    border: 0.3rem solid $color-primary;
+    cursor: pointer;
+    padding: 1.8rem 4rem; /* 15 px top and bottom and 40px left adn right*/
+    display: inline-block;
+    border-radius: .5rem;
+    font-size: $default-font-size;
+    font-weight: 600;
+    font-family: inherit;
+    outline: none;
+
+    transition: all 0.3s;
+    
+    
+    @include respond(tab-port) {
+        font-size: 1.8rem;
+        width: 40rem;
+        padding: 1.5rem 2rem;
+    }
+    @include respond(tab-land) {
+        font-size: 1.5rem;
+        width: 25rem;
+        padding: 1rem 2rem;
+    }
+
+    &-overwrite {
+        width: 48%;
+        margin: 0 0 0 2%;
+        // background-color: $color-tertiary-light;
+        padding: 1.8rem 1rem;
+    }
+    &-add {
+        width: 48%;
+        margin: 0 2% 0 0;
+        // background-color: $color-secondary;
+        padding: 1.8rem 1rem;
+    }
+
+    &:hover {
+        background-color: $color-secondary;
+        border-color: $color-secondary;
+    }
+
+    &-url {
+        width: 15%;
+        border-radius: 0.1rem;
+        // border-top-right-radius: $edge-roundness;
+        // border-bottom-right-radius:$edge-roundness;
+        @include respond(tab-port) {
+            width: 6rem;
+            margin-left: auto;
+        }
+
+        padding: 0;
+        border: none;
+        font-size: 3.5rem;
+        font-weight: 400;
+
+        &--add {
+            background-color: $color-primary;
+            font-weight: 500;
+        }
+
+        &--remove {
+            background-color: $color-tertiary-dark;
+        }
+
+    }
+}
