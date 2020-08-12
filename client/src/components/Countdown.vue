@@ -8,7 +8,7 @@
         <div class="url-grid-auth u-margin-bottom-small">
             <div class="url-grid__item url-grid__item--title">auth URL:</div>
             <a class="url-grid__item url-grid__item--url" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
-            <div>Verify <input type="checkbox" v-model="verified"/></div>
+            <div class="verify">Verify <input class="form__checkbox" type="checkbox" v-model="verified"/></div>
         </div>
     
         <div>
@@ -76,6 +76,7 @@ export default Vue.extend({
 
 <style lang="scss">
 
+
     .countdown {
         font-size: 1.8rem;
         margin-bottom: 2rem;
@@ -88,6 +89,10 @@ export default Vue.extend({
             padding: 0.5rem;
         }
         
+    }
+
+    .verify {
+        font-size: 1.8rem;
     }
 
     .url-grid {

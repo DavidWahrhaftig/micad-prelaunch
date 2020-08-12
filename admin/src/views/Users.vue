@@ -1,20 +1,23 @@
 <template>
     <div>
         <h3 v-if="users.length == 0">No visitors have registered</h3>
-        <ul class="ip__list u-margin-bottom-big">
+        <ul class="ip__list u-margin-bottom-medium">
             <li class="ip__item" v-for="({ip, email}, i) in ips" :key="i">{{ ip }} <span class="ip__item--email">{{email}}</span> </li>
         </ul>
+        <button class="button" @click="fetchUsers($store.getters.clientSelected._id)">
+            Refresh
+        </button>
     </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default Vue.extend({
-    // methods: {
-    //     ...mapActions(['fetchUsers'])
-    // },
+    methods: {
+        ...mapActions(['fetchUsers'])
+    },
     computed: {
         ...mapGetters(['users']),
         ips() {
