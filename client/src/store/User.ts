@@ -49,31 +49,64 @@ const mutations = {
     },
 }
 const actions = {
-    async createUser({commit, state, getters}: any) {
-        console.log("getters.isEmailValid", getters.isEmailValid);
-        if (!getters.isEmailValid) return;
-        
-        const res = await axios.post(`/api/users/${getters.clientID}`, {email: state.email, ip: state.currentIP});
-        console.log(res.headers);
-        //console.log(res);
+    async createUser({commit, getters}: any) {
+        try {
+            console.log("getters.isEmailValid", getters.isEmailValid);
+            if (!getters.isEmailValid) return;
+            const res = await axios.post(`/api/users/${getters.clientID}`, {email: getters.email, ip: getters.currentIP});
+            // commit mutations
+            commit('setSubmitSuccess', res.data.success);
+            commit('setMessage', res.data.msg);
+            commit('setFetchedUser', res.data.user);
+            // state.submitSuccess = res.data.success;
 
-        console.log(res.data)
+            return true;
+        } catch(err) {
+            console.log(err);
+            commit('setSubmitSuccess',false);
+            commit('setMessage', err.message);
+            return false;
+        }
         
-        // commit mutations
-        commit('setSubmitSuccess', res.data.success);
-        commit('setMessage', res.data.msg);
-        // state.submitSuccess = res.data.success;
+        
+        
     },
     async updateUser({commit, state, getters}: any, overwrite: boolean) {
-        const res = await axios.put(`/api/users/${getters.clientID}`, {email: state.email, ip: state.currentIP, overwriteIP: overwrite});
-        console.log(res.data)
-        
-        // commit mutations
-        commit('setSubmitSuccess', res.data.success);
-        commit('setMessage', res.data.msg);
-        // state.submitSuccess = res.data.success;
-        
+        try {
+            const res = await axios.put(`/api/users/${getters.clientID}`, {email: state.email, ip: state.currentIP, overwriteIP: overwrite});
+            console.log(res.data)
+            
+            // commit mutations
+            commit('setSubmitSuccess', res.data.success);
+            commit('setMessage', res.data.msg);
+            commit('setFetchedUser', res.data.user);
+            return true
+        } catch(err){
+            console.log(err);
+            
+            commit('setSubmitSuccess',false);
+            commit('setMessage', err.message);
+            return false;
+
+        }        
     },
+    async verifyAuthUrl({commit, state}: any, verification: boolean) {
+        try {
+            const res = await axios.put(`/api/users/verifyAuthURL/${state.fetchedUser._id}`, {verification});
+            if (res.data.success) {
+                commit('setSubmitSuccess', res.data.success);
+                commit('setMessage', res.data.msg);
+                return true;
+            }
+            return false;
+        } catch(err){
+            console.log(err);
+            commit('setSubmitSuccess', false);
+            return false;
+        }
+        
+
+    }
     
 }
 

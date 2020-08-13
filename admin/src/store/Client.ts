@@ -79,7 +79,9 @@ const actions = {
     },
     async fetchUsers({commit}: any, clientID: string) {
         try {
-            const res = await axios.get(`/api/admin/${clientID}/users`)
+            commit('setUsers', []);
+            const res = 
+            await axios.get(`/api/admin/${clientID}/users`)
             if(res.data.success) {
                 commit('setUsers', res.data.users);
             }

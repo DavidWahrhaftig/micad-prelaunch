@@ -11,9 +11,23 @@
                        v-model="client.header" 
                        >
             </div>
+            <!-- public enable switch -->
+            <div class="form__group form__group--switch">
+                    <label for="enable" class="form__label">Client page ready</label>
+                    <div class="form__switch-container">
+                        <label for="publicEnable" class="form__switch">
+                            <input type="checkbox" 
+                                id="publicEnable"
+                                class="form__switch-input"
+                                v-model="client.publicEnable" 
+                                >
+                            <span class="form__switch-slider"></span>
+                        </label>
+                    </div>
+            </div>
             <!-- welcome text -->
-            <div class="form__group">
-                <label for="welcomeText" class="form__label">Welcome text</label>
+            <div class="form__group" v-if="client.publicEnable">
+                <label for="welcomeText" class="form__label">Welcome Text</label>
                 <!-- <input type="text" 
                        class="form__input" 
                        placeholder="Welcome Title" 
@@ -21,10 +35,25 @@
                        v-model="client.welcomeText" 
                        > -->
                 <textarea class="form__input" 
-                       placeholder="Welcome Title" 
+                       placeholder="Welcome text" 
                        id="welcomeText"
                        rows="4"
                        v-model="client.welcomeText"></textarea>
+            </div>
+            <!-- Preready text -->
+            <div class="form__group" v-else>
+                <label for="prereadyText" class="form__label">Pre-available Text (when site isn't ready)</label>
+                <!-- <input type="text" 
+                       class="form__input" 
+                       placeholder="Welcome Title" 
+                       id="welcomeText"
+                       v-model="client.welcomeText" 
+                       > -->
+                <textarea class="form__input" 
+                       placeholder="Pre-available text" 
+                       id="prereadyText"
+                       rows="4"
+                       v-model="client.prereadyText"></textarea>
             </div>
             <!-- instructions text -->
             <div class="form__group">
@@ -43,7 +72,7 @@
             </div>
             <!-- launchdate -->
             <div class="form__group">
-                    <label for="date" class="form__label form__label-date">Launchdate</label>
+                    <label for="date" class="form__label form__label-date">Launch date</label>
                     <input type="date" 
                         class="form__input" 
                         id="date"
@@ -52,20 +81,7 @@
                         >
                 
             </div>
-            <!-- public enable switch -->
-            <div class="form__group form__group--switch">
-                    <label for="enable" class="form__label">Client page public</label>
-                    <div class="form__switch-container">
-                        <label for="publicEnable" class="form__switch">
-                            <input type="checkbox" 
-                                id="publicEnable"
-                                class="form__switch-input"
-                                v-model="client.publicEnable" 
-                                >
-                            <span class="form__switch-slider"></span>
-                        </label>
-                    </div>
-            </div>
+            
             <!-- sso enable switch -->
             <div class="form__group form__group--switch">
                     <label for="enable" class="form__label">SSO (on/off)</label>
@@ -80,18 +96,8 @@
                         </label>
                     </div>
             </div>
-            <!-- releaseNotes url -->
-            <div class="form__group">
-                <label for="releaseNotes" class="form__label">Release Notes link</label>
-                <input type="url" 
-                       class="form__input" 
-                       placeholder="Release Notes link" 
-                       id="releaseNotes"
-                       v-model="client.releaseNotes" 
-                       >
-            </div>
             <!-- auth url -->
-            <div class="form__group">
+            <div class="form__group" v-if="client.ssoEnable">
                 <label for="authUrl" class="form__label">Authentication URL</label>
                 <input type="url" 
                        class="form__input" 
@@ -147,18 +153,34 @@
                        id="url"
                        v-model="newUrl.url" 
                        > 
-                    <!-- <div class="form__input form__input-control">
-                        <button class="form__input-control-btn form__input-control-btn--add"
-                                @click.prevent="addUrl()">
-                            +
-                        </button> 
-                    </div> -->
                     <button class="button button-url button-url--add"
                             @click.prevent="addUrl()"> 
                         + 
                     </button>
-                </li>
-                          
+                </li>                          
+            </div>
+            <!-- verifications -->
+            <div class="form__group">
+                <label for="verifications" class="form__label">Verifications</label>
+                <div class="form__input-list">
+                    <div class="form__checkbox-container" v-for="(key, i) in Object.keys(client.verifications)" :key="i">
+                        <label class="form__label form__label--sub">{{ client.verifications[key].label }}</label>
+                        <input type="checkbox" 
+                            class="form__checkbox"
+                            v-model="client.verifications[key].verify">
+                    </div>
+                </div>
+                
+            </div>
+            <!-- releaseNotes url -->
+            <div class="form__group">
+                <label for="releaseNotes" class="form__label">Release Notes link</label>
+                <input type="url" 
+                       class="form__input" 
+                       placeholder="Release Notes link" 
+                       id="releaseNotes"
+                       v-model="client.releaseNotes" 
+                       >
             </div>
             <!-- Save Button -->
             <div class="form__group">
@@ -213,31 +235,6 @@ export default Vue.extend({
             const success = await this.updateClient(this.client);
             this.$emit('submitted', success);
         }
-        // async fetchAdminSettings() {
-        //     const res = await axios.get('/api/admin');
-        //     if (res.data.success) {
-        //         const {
-        //             enable,
-        //             title,
-        //             launchDate,
-        //             urls,
-        //         } = res.data.config
-        //         this.settings = {enable, title, launchDate, urls};
-        //     }
-        // },
-        // async updateAdminSettings() {
-
-        //     // filter empty urls
-        //     this.settings.urls = this.settings.urls.filter(item => item.url.length > 0);
-        //     // const adminSettings = {
-        //     //     launchDate
-        //     // }
-        //     const res = await axios.put('/api/admin', {adminSettings: this.settings});
-        //     console.log(res.data.msg);
-        //     if (res.data.success) {
-        //         this.$router.push('/');
-        //     }
-        // }
     },
 
     created() {

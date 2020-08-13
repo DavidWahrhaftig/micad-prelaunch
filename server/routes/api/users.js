@@ -72,8 +72,9 @@ router.post('/:clientID', async (req, res) => {
         const newUser = await User.create({clientID: req.params.clientID, email: req.body.email});
         newUser.ips.push(req.body.ip);
         newUser.save();
-        res.status(200).json({
+        res.status(201).json({
             success: true,
+            user: newUser,
             msg: 'Your IP has been recorded!'
         });
 
@@ -117,9 +118,53 @@ router.put('/:clientID', async(req, res) => {
                 user.ips.push(req.body.ip);
                 user.save();
 
-                res.status(200).json({
+                res.status(201).json({
                     success: true,
+                    user,
                     msg
+                });
+            }).catch(err => {
+                res.status(404).json({
+                    success: false,
+                    msg: err.message
+                });
+            });
+
+    } catch (err) {
+        res.status(404).json({
+            success: false,
+            msg: err.message
+        });
+    }
+    
+});
+
+// verify authURL user
+router.put('/verifyAuthURL/:userID', async(req, res) => {
+    // check client exists
+    try {
+        // const foundClient = await Client.findById(req.params.clientID);
+        // if (!foundClient) {
+        //     return  res.status(404).json({
+        //         success: false,
+        //         msg: "Client ID did not match an existing Client"
+        //     });
+        // }
+
+        User.findByIdAndUpdate(req.params.userID, {authUrlVerified: req.body.verification})
+            .then(user => {
+
+                // if (user.clientID != req.params.clientID) {
+                //     return  res.status(404).json({
+                //         success: false,
+                //         msg: `The client ${foundClient.clientName} doesn't have this user`
+                //     });
+                // }
+
+                res.status(201).json({
+                    success: true,
+                    user,
+                    msg: 'Updated auth url verfication status for user'
                 });
             }).catch(err => {
                 res.status(404).json({

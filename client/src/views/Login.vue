@@ -12,7 +12,7 @@
                        required>
                 
             </div>
-            <button class="form__btn form__btn-submit" @click.prevent="fetchClient(clientID)" >
+            <button class="button" @click.prevent="fetchClient(clientID)" >
                 Submit
             </button>
         </form>

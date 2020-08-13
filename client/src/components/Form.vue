@@ -8,7 +8,6 @@
                        placeholder="Email address" 
                        id="email" 
                        :value="email" @input="setEmail($event.target.value)"
-                       :disabled="submitSuccess"
                        required>
                 
             </div>
@@ -29,8 +28,19 @@
                     </button> 
                 </div>
             </div>
-            <div class="form__group" v-else>
-                <div class="alert alert--success" :class="{'alert--invalid': ipAlreadyRecorded}">{{ message }}</div>
+            <div class="form__group">
+                <div class="alert alert--invalid" v-if="ipAlreadyRecorded && !submitSuccess">This IP has already been recorded!</div>
+                <div class="alert alert--success" v-if="submitSuccess">{{message}}</div>
+            </div>
+
+            <!-- <div class="form__group" v-if="submissionSuccess">
+
+            </div> -->
+
+            <div class="url-grid--auth u-margin-bottom-small" v-if="fetchedUser && $store.getters.clientConfig.ssoEnable">
+                <div class="url-grid__item url-grid__item--title">auth URL:</div>
+                <a class="url-grid__item url-grid__item--url" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
+                <div class="verify">Verify: <input class="form__checkbox" type="checkbox" v-model="fetchedUser.authUrlVerified"/></div>
             </div>
         </form>
     </div>
@@ -44,15 +54,27 @@ import { mapGetters, mapActions, mapMutations, mapState } from 'vuex';
 
 export default Vue.extend({
     // props: ['userData', 'fetchedUser', 'submitSuccess'],
+    // data() {
+    //     return {
+            
+    //     }
+    // },
     computed: {
-        ...mapState({
-            email: state => state.User.email
-        }),
-        ...mapGetters(['fetchedUser', 'currentIP', 'submitSuccess', 'isEmailValid', 'message']),
+        // ...mapState({
+        //     email: state => state.User.email
+        // }),
+        ...mapGetters(['email', 'fetchedUser', 'currentIP', 'submitSuccess', 'isEmailValid', 'message']),
         ipAlreadyRecorded() {
             if (!this.fetchedUser) return false;
             return this.fetchedUser.ips.includes(this.currentIP);
         }
+    },
+        methods: {
+        ...mapMutations(['setEmail', 'setFetchedUser', 'setMessage']),
+        ...mapActions(['createUser', 'updateUser', 'verifyAuthUrl']),
+        // async submitForm() {
+        //     const success = await this.updateUser()
+        // }
     },
     watch: {
         async "$store.state.User.email"() {
@@ -65,23 +87,35 @@ export default Vue.extend({
                 this.setFetchedUser(null);
             }
         },
-        ipAlreadyRecorded(newVal, oldVal) {
-            if (newVal) {
-                this.setMessage('This IP has already been recorded!');
-            }
-        }
-    },
-    methods: {
-        ...mapMutations(['setEmail', 'setFetchedUser', 'setMessage']),
-        ...mapActions(['createUser', 'updateUser'])
-    }
+        async "fetchedUser.authUrlVerified"(newVal, oldVal) {
+            console.log('newVal', newVal);
+            console.log('oldVal', oldVal);
 
+            if (oldVal != null) {
+                console.log('verification changed');
+                this.setMessage('');
+                const res = await this.verifyAuthUrl(newVal);
+                console.log(res);
+            }
+            
+        },
+        // ipAlreadyRecorded(newVal, oldVal) {
+        //     if (newVal) {
+        //         this.setMessage('This IP has already been recorded!');
+        //     }
+        // }
+    }
 
 });
 </script>
 
 <style lang="scss">
-
+    .verify {
+        display: flex;
+        font-size: 1.8rem;
+        justify-content: space-around;
+        align-items: center;
+    }
     .form-previous {
         width: 36rem;  
         margin: 0 auto;

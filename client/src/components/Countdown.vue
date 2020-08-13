@@ -3,14 +3,7 @@
         
         <h1 class="countdown" v-if="isLaunched">Your micad system was Launched on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
         <h1 class="countdown" v-else><span class="countdown__days">{{remainingDays}}</span> days to launch date on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
-        
-        
-        <div class="url-grid-auth u-margin-bottom-small">
-            <div class="url-grid__item url-grid__item--title">auth URL:</div>
-            <a class="url-grid__item url-grid__item--url" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
-            <div class="verify">Verify <input class="form__checkbox" type="checkbox" v-model="verified"/></div>
-        </div>
-    
+            
         <div>
             <h3 class="heading-primary--sub" v-if="isLaunched">Your URLs are:</h3>
             <h3 class="heading-primary--sub" v-else>Your URLs will be:</h3>
@@ -91,9 +84,7 @@ export default Vue.extend({
         
     }
 
-    .verify {
-        font-size: 1.8rem;
-    }
+
 
     .url-grid {
         margin: 0 auto;
@@ -108,21 +99,22 @@ export default Vue.extend({
             grid-template-columns: 10rem 50rem;
         }
 
-        &-auth {
+        &--auth {
             margin: 0 auto;
             width: 40rem;
             display: grid;
             // grid-template-columns: 8rem 35rem 5rem;
             grid-template-columns: 25% 55% 20%;
-            justify-items: start;
+            justify-items: stretch;
             @include respond(tab-port) {
-                width: 40rem;
-                grid-template-columns: 8rem 35rem 5rem;
+                width: 100%;
+                // width: 70rem;
+                grid-template-columns: 20% 65% 15%;
             }
-            @include respond(tab-land) {
-                width: 60rem;
-                grid-template-columns: 10rem 40rem 10rem;
-            }
+            // @include respond(tab-land) {
+            //     width: 60rem;
+            //     grid-template-columns: 10rem 40rem 10rem;
+            // }
         }
 
         &__item {

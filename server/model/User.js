@@ -14,7 +14,11 @@ const UserSchema = new mongoose.Schema({
         {
             type: String
         }
-    ]
+    ],
+    authUrlVerified: {
+        type: Boolean,
+        default: false
+    }
 });
 
 

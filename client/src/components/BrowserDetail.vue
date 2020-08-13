@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="detail">
-            <h4 v-if="currentIP != '' && !submitSuccess" class="detail__text">Your IP: <span class="detail__text-value">{{ currentIP }}</span></h4>
+            <h4 v-if="currentIP != ''" class="detail__text">Your IP: <span class="detail__text-value">{{ currentIP }}</span></h4>
             <!-- <h4 v-if="currentIP != '' && !submitSuccess" class="detail__text">Your Server's IP: <span class="detail__text-value">0.0.0.0</span></h4> -->
             <h4 class="detail__text">Browser:  <span class="detail__text-value">"Chrome"</span></h4>
             <h4 class="detail__text">Browser Version:  <span class="detail__text-value">"Version"</span></h4>
