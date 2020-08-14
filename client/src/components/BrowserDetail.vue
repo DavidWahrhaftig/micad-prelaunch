@@ -61,7 +61,7 @@ export default {
 
     .detail {
         text-align: left;
-        width: 40rem;
+        width: 30rem;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
