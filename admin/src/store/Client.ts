@@ -64,11 +64,12 @@ const actions = {
             console.log(err);
         }
     },
-    async updateClient({dispatch}: any, modifiedClient: any) {
+    async updateClient({dispatch, commit, getters}: any, modifiedClient: any) {
         try {
             const res = await axios.put(`/api/admin/${modifiedClient._id}`, modifiedClient);
             if (res.data.success) {
                 await dispatch('fetchClients');
+                // commit('setClientSelected', getters.clients.find((client: any) => {return client._id == getters.clientSelected}));
                 return true;
             }
         }

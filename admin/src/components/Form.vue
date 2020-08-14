@@ -12,7 +12,7 @@
                        >
             </div>
             <!-- public enable switch -->
-            <div class="form__group form__group--switch">
+            <!-- <div class="form__group form__group--switch">
                     <label for="enable" class="form__label">Client page ready</label>
                     <div class="form__switch-container">
                         <label for="publicEnable" class="form__switch">
@@ -24,9 +24,9 @@
                             <span class="form__switch-slider"></span>
                         </label>
                     </div>
-            </div>
+            </div> -->
             <!-- welcome text -->
-            <div class="form__group" v-if="client.publicEnable">
+            <div class="form__group">
                 <label for="welcomeText" class="form__label">Welcome Text</label>
                 <!-- <input type="text" 
                        class="form__input" 
@@ -41,20 +41,14 @@
                        v-model="client.welcomeText"></textarea>
             </div>
             <!-- Preready text -->
-            <div class="form__group" v-else>
+            <!-- <div class="form__group" v-else>
                 <label for="prereadyText" class="form__label">Pre-available Text (when site isn't ready)</label>
-                <!-- <input type="text" 
-                       class="form__input" 
-                       placeholder="Welcome Title" 
-                       id="welcomeText"
-                       v-model="client.welcomeText" 
-                       > -->
                 <textarea class="form__input" 
                        placeholder="Pre-available text" 
                        id="prereadyText"
                        rows="4"
                        v-model="client.prereadyText"></textarea>
-            </div>
+            </div> -->
             <!-- instructions text -->
             <div class="form__group">
                 <label for="instructions" class="form__label">Instructions Text</label>

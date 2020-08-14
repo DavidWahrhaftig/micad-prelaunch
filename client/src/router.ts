@@ -5,6 +5,7 @@ import Login from './views/Login.vue';
 import Details from './views/Details.vue';
 import Instructions from './views/Instructions.vue';
 import ReleaseNotes from './views/ReleaseNotes.vue';
+
 import store from './store';
 
 Vue.use(VueRouter);
@@ -48,11 +49,15 @@ const router = new VueRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+
     if (to.name !== 'identify client' && !store.getters.isClientIdentified) {
         console.log("client id not identified");
         next({ name: 'identify client' });
     }
+
+    
+    
     // if the user is not authenticated, `next` is called twice
 
     next();

@@ -27,10 +27,10 @@ const ClientSchema = new mongoose.Schema(
             type: Date,
             default: null
         },
-        publicEnable: {
-            type: Boolean,
-            default: false
-        },
+        // publicEnable: {
+        //     type: Boolean,
+        //     default: false
+        // },
         ssoEnable: {
             type: Boolean,
             default: false
@@ -60,10 +60,10 @@ const ClientSchema = new mongoose.Schema(
             type: String,
             default: 'Admin welcome text'
         },
-        prereadyText: {
-            type: String,
-            default: 'Admin pre-ready text'
-        },
+        // prereadyText: {
+        //     type: String,
+        //     default: 'Admin pre-ready text'
+        // },
         instructionsText: {
             type: String,
             default: 'Admin instructions text'

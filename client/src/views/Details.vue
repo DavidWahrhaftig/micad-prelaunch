@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-broswer-detail class="u-margin-bottom-medium"/>
-        <app-form/>
+        <app-form v-if="$store.getters.currentIP != '' "/>
         <div class="message">
             Type your email to see if you have recorded this IP in our system.
             Press submit if you want to have your current IP recorded.

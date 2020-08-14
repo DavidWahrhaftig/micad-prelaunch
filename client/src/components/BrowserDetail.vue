@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="details">
-            <div class="detail">
+            <div class="detail" v-if="currentIP">
                 <h4 class="detail__text">Your IP:</h4>
-                <h4 v-if="currentIP" class="detail__text detail__text-value">{{ currentIP }}</h4>
+                <h4 class="detail__text detail__text-value">{{ currentIP }}</h4>
             </div>
             <div class="detail">
                 <h4 class="detail__text">OS:</h4>

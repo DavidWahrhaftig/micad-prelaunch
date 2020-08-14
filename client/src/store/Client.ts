@@ -3,7 +3,7 @@ import router from '../router';
 
 const state = {
     clientConfig: null,
-    clientID: localStorage.getItem('clientID') || ''
+    clientID: localStorage.getItem('clientID') || '',
 
 }
 const getters = {
@@ -48,22 +48,6 @@ const actions = {
             console.log("this client id is invalid");
             commit('setErrorMessage', 'Client ID is invalid');
         }
-        // const res = await axios.get(`api/admin/${clientID}`);
-        // console.log(res.data);
-        // if (res.data.success) {
-        //     // commit("setClientID", clientID);
-        //     if (res.data.client) {
-        //         commit("setClientConfig", res.data.client);
-        //         commit("setClientID", res.data.client._id);
-        //         localStorage.setItem('clientID', res.data.client._id);
-
-        //         if (router.currentRoute.path != '/') {
-        //             router.push('/');
-        //         }   
-        //     }           
-        // } else {
-        //     console.log("this client id is invalid");
-        // }
     },
 
     removeClientID({commit, state}: any) {
