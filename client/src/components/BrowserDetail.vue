@@ -1,11 +1,26 @@
 <template>
     <div>
-        <div class="detail">
-            <h4 v-if="currentIP != ''" class="detail__text">Your IP: <span class="detail__text-value">{{ currentIP }}</span></h4>
-            <!-- <h4 v-if="currentIP != '' && !submitSuccess" class="detail__text">Your Server's IP: <span class="detail__text-value">0.0.0.0</span></h4> -->
-            <h4 class="detail__text">Browser:  <span class="detail__text-value">"Chrome"</span></h4>
-            <h4 class="detail__text">Browser Version:  <span class="detail__text-value">"Version"</span></h4>
-            <h4 class="detail__text">OS:  <span class="detail__text-value">"Windows 10"</span></h4>
+        <div class="details">
+            <div class="detail">
+                <h4 class="detail__text">Your IP:</h4>
+                <h4 v-if="currentIP" class="detail__text detail__text-value">{{ currentIP }}</h4>
+            </div>
+            <div class="detail">
+                <h4 class="detail__text">OS:</h4>
+                <h4 class="detail__text detail__text-value">{{ platform.os.family }} {{ platform.os.version }}</h4>
+            </div>
+            <div class="detail" v-if="platform.product">
+                <h4 class="detail__text">Device:</h4>
+                <h4 class="detail__text detail__text-value">{{ platform.product }}</h4>
+            </div>
+            <div class="detail">
+                <h4 class="detail__text">Browser:</h4>
+                <h4 class="detail__text detail__text-value">{{platform.name}} {{ platform.version }}</h4>
+            </div>
+            <div class="detail">
+                <h4 class="detail__text">Screen Size:</h4>
+                <h4 class="detail__text detail__text-value">{{ screenSize }}</h4>
+            </div>            
         </div>
     </div>
 
@@ -14,20 +29,17 @@
 <script>
 import axios from 'axios';
 import { mapMutations, mapGetters } from 'vuex';
+import platform from 'platform';
 
 export default {
     computed: {
         ...mapGetters(['currentIP', 'submitSuccess']),
-        browserDetails() {
-            return {
-                nVer: navigator.appVersion,
-                nAgt: navigator.userAgent,
-                browserName: navigator.appName,
-                fullVersion:''+parseFloat(navigator.appVersion),
-                majorVersion: parseInt(navigator.appVersion,10)
-
-            }
+        platform() {
+            return {...platform};
         },
+        screenSize(){
+            return `${window.screen.width} x ${window.screen.height}`
+        }
 
     },
     methods: {
@@ -39,6 +51,8 @@ export default {
         console.log(res);
         // this.ip = res.data.ip; 
         this.setCurrentIP(res.data.ip);
+
+        // const res2 = await axios.post('https://api.whatismybrowser.com/api/v2/user_agent_parse', )    
     }
 }
 </script>
@@ -47,8 +61,12 @@ export default {
 
     .detail {
         text-align: left;
-        width: 30rem;
+        width: 40rem;
         margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
         &__text {
             font-size: 2rem;
             color: $color-secondary-dark;
