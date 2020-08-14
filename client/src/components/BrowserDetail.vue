@@ -60,22 +60,28 @@ export default {
 <style lang="scss">
 
     .detail {
-        text-align: left;
+        // text-align: left;
         width: 30rem;
+        font-size: 1.5rem;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        &__text {
+
+        @include respond(tab-port) {
+            width: 50rem;
             font-size: 2rem;
+        }
+
+        &__text {
             color: $color-secondary-dark;
             &-value {
                 // justify-self: end;
-                display: inline-block;
-                padding-left: 1rem;
+                // display: inline-block;
+                // padding-left: 1rem;
                 color: $color-primary;
-                float: right;
+                // float: right;
                 
             }
         }
