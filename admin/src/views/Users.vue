@@ -18,9 +18,12 @@
                     {{ user.email }}
                 </div>
                 <div class="visitor-ips">
-                    <div class="visitor-ip" v-for="ipInfo in user.ips" :key="ipInfo.ip">
+                    <a href="#popup" 
+                       class="visitor-ip" 
+                       v-for="ipInfo in user.ips" :key="ipInfo.ip"
+                       @click="selectIp(ipInfo, user)">
                         {{ ipInfo.ip }}
-                    </div>
+                    </a>
                 </div>
                 <div class="visitor-verified">
                     <input readonly 
@@ -40,16 +43,31 @@
         <!-- <button class="button" @click="fetchUsers($store.getters.clientSelected._id)">
             Copy IPS
         </button> -->
+        <app-ip-info-popup v-if="ipSelected" :ipInfo="ipSelected"/>
+
     </div>
 </template>
 
 <script>
 import Vue from 'vue';
 import { mapGetters, mapActions } from 'vuex';
+import IpInfoPopup from '../components/IpInfoPopup';
+
 
 export default Vue.extend({
+    components: {
+        appIpInfoPopup: IpInfoPopup
+    },
+    data() {
+        return {
+            ipSelected: null,
+        }
+    },
     methods: {
-        ...mapActions(['fetchUsers'])
+        ...mapActions(['fetchUsers']),
+        selectIp(ipInfo, user) {
+            this.ipSelected = {...ipInfo, email: user.email};
+        }
     },
     computed: {
         ...mapGetters(['users']),
@@ -65,6 +83,7 @@ export default Vue.extend({
     async created() {
         // await this.fetchUsers(this.$store.getters.clientSelected._id);
         console.log('created');
+        // if (this.users.length > 0) this.selectIp(this.users[0].ipInfo, this.users[0])
     }
 });
 </script>
@@ -116,9 +135,16 @@ export default Vue.extend({
             // justify-self: center;
         }
 
-        &-ips {
+        &-ip {
+            display:block;
             // justify-self: center;
-        }
+            text-decoration: none;
+            border-bottom: 0.2rem solid transparent;
+            &:hover {
+
+                border-bottom: 0.2rem solid currentColor;
+            }
+        }   
 
         &-verified {
             // justify-self: center;

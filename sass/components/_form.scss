@@ -233,6 +233,8 @@
         border-radius: 0.3rem;
         font-size: 1.8rem;
 
+        background-color: $color-white;
+
         @include respond(tab-port) {
             width: 75%;
         }
