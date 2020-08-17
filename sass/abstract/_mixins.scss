@@ -19,3 +19,19 @@
         @media (min-width: 112.5em) { @content }; // 1800px
     }
 }
+
+@mixin page-paddings {
+    @include respond(tab-port) {
+        // padding: 0 4rem;
+    }
+    @include respond(tab-land) {
+        padding: 0 8rem;
+    }
+    @include respond(desktop) {
+        padding: 0 12rem;
+    }
+    @include respond(big-desktop) {
+        padding: 0 20rem;
+    }
+
+}

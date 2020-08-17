@@ -7,9 +7,12 @@
     grid-template-areas: "logo" "title";
     justify-items: center;
 
+    @include page-paddings;
+
     @include respond(tab-port) {
         grid-template-columns: 1fr 2fr;
         grid-template-areas: "logo title";
+        padding-bottom: 1.5rem;
     }
 
     &__logo {

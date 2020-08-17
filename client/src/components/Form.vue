@@ -33,14 +33,23 @@
                 <div class="alert alert--success" v-if="submitSuccess">{{message}}</div>
             </div>
 
-            <!-- <div class="form__group" v-if="submissionSuccess">
-
+            <!-- <div class="auth-verify u-margin-bottom-small" v-if="fetchedUser && $store.getters.clientConfig.ssoEnable">
+                <div class="auth-verify__item auth-verify__item--title">auth URL:</div>
+                <a class="auth-verify__item auth-verify__item--url" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
+                <div class="auth-verify__item auth-verify__itme--verify">Verify: <input class="form__checkbox" type="checkbox" v-model="fetchedUser.authUrlVerified"/></div>
             </div> -->
-
-            <div class="url-grid--auth u-margin-bottom-small" v-if="fetchedUser && $store.getters.clientConfig.ssoEnable">
-                <div class="url-grid__item url-grid__item--title">auth URL:</div>
-                <a class="url-grid__item url-grid__item--url" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
-                <div class="verify">Verify: <input class="form__checkbox" type="checkbox" v-model="fetchedUser.authUrlVerified"/></div>
+            <div class="auth-verify u-margin-bottom-small" v-if=" submitSuccess || ipAlreadyRecorded">
+                <div class="auth-verify__url">
+                    <span class="auth-verify__url--title">
+                        Auth URL:
+                    </span>
+                    <a class="auth-verify__url--path" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
+                </div>
+                <div class="auth-verify__verification">
+                    <span class="auth-verify__verification--text">Verify: </span>
+                    <input class="auth-verify__verification--input form__checkbox" type="checkbox" v-model="verify"/>
+                </div>
+                <!-- <div class="auth-verify__item auth-verify__itme--verify">Verify: <input class="form__checkbox" type="checkbox" v-model="fetchedUser.authUrlVerified"/></div> -->
             </div>
         </form>
     </div>
@@ -54,11 +63,12 @@ import { mapGetters, mapActions, mapMutations, mapState } from 'vuex';
 
 export default Vue.extend({
     // props: ['userData', 'fetchedUser', 'submitSuccess'],
-    // data() {
-    //     return {
-            
-    //     }
-    // },
+    data() {
+        return {
+            loadedUser: false,
+            verify: false
+        }   
+    },
     computed: {
         // ...mapState({
         //     email: state => state.User.email
@@ -66,39 +76,71 @@ export default Vue.extend({
         ...mapGetters(['email', 'fetchedUser', 'currentIP', 'submitSuccess', 'isEmailValid', 'message']),
         ipAlreadyRecorded() {
             if (!this.fetchedUser) return false;
-            return this.fetchedUser.ips.includes(this.currentIP);
+            const index = this.fetchedUser.ips.findIndex(ipInfo => {return ipInfo.ip == this.currentIP});
+            // return this.fetchedUser.ips.includes(this.currentIP);
+            return index != -1;
         }
     },
         methods: {
-        ...mapMutations(['setEmail', 'setFetchedUser', 'setMessage']),
+        ...mapMutations(['setEmail', 'setFetchedUser', 'setMessage', 'setSubmitSuccess']),
         ...mapActions(['createUser', 'updateUser', 'verifyAuthUrl']),
-        // async submitForm() {
-        //     const success = await this.updateUser()
-        // }
+
     },
     watch: {
         async "$store.state.User.email"() {
+            this.setSubmitSuccess(false);
             if(this.isEmailValid) {
                 console.log("valid email");
                 const res = await axios.get(`/api/users/${this.$store.getters.clientID}/${this.email}`);
                 this.setFetchedUser(res.data.user);
+
+                if (res.data.user) {
+                    const ipIndex = this.fetchedUser.ips.findIndex(ipInfo => {
+                        return ipInfo.ip == this.currentIP;
+                    });
+                    console.log('index', ipIndex);
+                    if (ipIndex == -1) {
+                        
+                        this.verify = false;
+                    } else {
+                        console.log('setting to: ', this.fetchedUser.ips[ipIndex].authUrlVerified)
+                        this.verify = this.fetchedUser.ips[ipIndex].authUrlVerified;
+                    }
+                    this.loadedUser = true;
+                }
+
             } else {
                 console.log("email not valid");
                 this.setFetchedUser(null);
+                this.loadedUser = false;
+                this.verify = false;
             }
         },
-        async "fetchedUser.authUrlVerified"(newVal, oldVal) {
-            console.log('newVal', newVal);
-            console.log('oldVal', oldVal);
+        async verify(newVal, oldVal) {
 
-            if (oldVal != null) {
-                console.log('verification changed');
-                this.setMessage('');
-                const res = await this.verifyAuthUrl(newVal);
-                console.log(res);
-            }
+            try {
+                console.log('newVal', newVal);
+                console.log('oldVal', oldVal);
+                if (oldVal != null) {
+                    console.log('verification changed');
+                    // this.setMessage('');
+
+                    if (this.loadedUser) {
+                        const res = await this.verifyAuthUrl(newVal);
+                        console.log(res);
+                        // if (res.data.success) {
+
+                        // }
+                        
+                    }
+                }
+            } catch(err) {
+                console.log(err);
+                this.verify = false;
+            }            
+        }
             
-        },
+        // },
         // ipAlreadyRecorded(newVal, oldVal) {
         //     if (newVal) {
         //         this.setMessage('This IP has already been recorded!');
@@ -110,12 +152,91 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-    .verify {
-        display: flex;
-        font-size: 1.8rem;
-        justify-content: space-around;
-        align-items: center;
+
+    .auth-verify {
+    
+        margin: 0 auto;
+        width: 100%;
+        background-color: $color-secondary-light;
+        padding: 1rem;
+
+        font-size: 2.5rem;
+        
+        &__url {
+           &--title {
+               margin-right: 1rem;
+               font-weight: bold;
+           }
+
+           &--path {
+
+           }
+        }
+
+        &__verification {
+            display: flex;
+            margin-top: 1rem;
+            justify-content: center;
+            align-items: center;
+            
+            &--text {
+                margin-right: 2rem;
+            }
+
+            &--input {
+
+            }
+        }
+       
     }
+    // .auth-verify {
+    
+    //     margin: 0 auto;
+    //     width: 100%;
+    //     display: grid;
+    //     background-color: $color-secondary-light;
+    //     padding: 2rem;
+    //     // grid-template-columns: 8rem 35rem 5rem;
+    //     // grid-template-columns: 25% 55% 20%;
+    //     // grid-template-areas: "title url" 
+    //     // "verify verify";
+    //     grid-template-columns: 20% 80%;
+    //     // justify-content: space-between;
+    //     // align-items: center;
+               
+
+    //     &__item {
+    //         font-size:$default-font-size;
+    //         // font-size: 2rem;
+
+    //         @include respond(tab-land) {
+    //             font-size: 1.8rem;
+    //         }
+    //         &--title {
+    //             // grid-area: title;
+    //             font-weight: 600;
+    //             // margin-right: 2rem;
+    //             // grid-area: title;
+    //         }
+
+    //         &--url {
+    //             // grid-area: url
+    //             // grid-area: url;
+    //         }
+
+    //         &--verify {
+    //             // grid-area: verify;
+    //             display: flex;
+    //             font-size: 3rem;
+    //             justify-content: space-around;
+    //             align-items: center;
+    //             margin: 0 auto;
+    //         }
+    //     }
+    // }
+
+
+
     .form-previous {
         width: 36rem;  
         margin: 0 auto;

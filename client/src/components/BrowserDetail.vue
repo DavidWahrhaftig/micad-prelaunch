@@ -33,8 +33,9 @@ import platform from 'platform';
 
 export default {
     computed: {
-        ...mapGetters(['currentIP', 'submitSuccess']),
+        ...mapGetters(['currentIP', 'submitSuccess', 'currentPlatform']),
         platform() {
+            // this.setCurrentPlatform(...platform);
             return {...platform};
         },
         screenSize(){
@@ -43,14 +44,20 @@ export default {
 
     },
     methods: {
-        ...mapMutations(['setCurrentIP'])
+        ...mapMutations(['setCurrentIP', 'setCurrentPlatform'])
     },
     async created() {
         // const res = await fetch('https://api.ipify.org/?format=json', options);
-        const res = await axios.get('https://api.ipify.org/?format=json');
-        console.log(res);
-        // this.ip = res.data.ip; 
-        this.setCurrentIP(res.data.ip);
+        try {
+            const res = await axios.get('https://api.ipify.org/?format=json');
+            console.log(res);
+            this.setCurrentIP(res.data.ip);
+            this.setCurrentPlatform({...platform});
+            
+        } catch(err) {
+            console.log(err);
+            this.setCurrentPlatform({...platform});
+        }
 
         // const res2 = await axios.post('https://api.whatismybrowser.com/api/v2/user_agent_parse', )    
     }
@@ -61,8 +68,8 @@ export default {
 
     .detail {
         // text-align: left;
-        width: 30rem;
-        font-size: 1.5rem;
+        width: 40rem;
+        font-size: $default-font-size;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
@@ -71,7 +78,7 @@ export default {
 
         @include respond(tab-port) {
             width: 50rem;
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
 
         &__text {

@@ -4,6 +4,7 @@ import router from '../router';
 const state = {
     email: '',
     currentIP: '',
+    currentPlatform: null,
     fetchedUser: null,
     submitSuccess: false,
     message: ''
@@ -14,6 +15,9 @@ const getters = {
     },
     currentIP(state: any): string {
         return state.currentIP;
+    },
+    currentPlatform(state: any): any {
+        return state.currentPlatform;
     },
     fetchedUser(state: any) {
         return state.fetchedUser;
@@ -38,6 +42,9 @@ const mutations = {
     setCurrentIP(state: any, ip: string) {
         state.currentIP = ip;
     },
+    setCurrentPlatform(state: any, platform: any) {
+        state.currentPlatform = platform;
+    },
     setFetchedUser(state: any, user: any) {
         state.fetchedUser = user;
     },
@@ -53,7 +60,7 @@ const actions = {
         try {
             console.log("getters.isEmailValid", getters.isEmailValid);
             if (!getters.isEmailValid) return;
-            const res = await axios.post(`/api/users/${getters.clientID}`, {email: getters.email, ip: getters.currentIP});
+            const res = await axios.post(`/api/users/${getters.clientID}`, {email: getters.email, ip: getters.currentIP, platform: getters.currentPlatform});
             // commit mutations
             commit('setSubmitSuccess', res.data.success);
             commit('setMessage', res.data.msg);
@@ -71,9 +78,9 @@ const actions = {
         
         
     },
-    async updateUser({commit, state, getters}: any, overwrite: boolean) {
+    async updateUser({commit, getters}: any, overwrite: boolean) {
         try {
-            const res = await axios.put(`/api/users/${getters.clientID}`, {email: state.email, ip: state.currentIP, overwriteIP: overwrite});
+            const res = await axios.put(`/api/users/${getters.clientID}`, {email: getters.email, ip: getters.currentIP, platform: getters.currentPlatform, overwriteIP: overwrite});
             console.log(res.data)
             
             // commit mutations
@@ -90,12 +97,13 @@ const actions = {
 
         }        
     },
-    async verifyAuthUrl({commit, state}: any, verification: boolean) {
+    async verifyAuthUrl({commit, getters}: any, verification: boolean) {
         try {
-            const res = await axios.put(`/api/users/verifyAuthURL/${state.fetchedUser._id}`, {verification});
+            const res = await axios.put(`/api/users/verifyAuthURL/${getters.fetchedUser._id}`, {ip: getters.currentIP, verification});
             if (res.data.success) {
                 commit('setSubmitSuccess', res.data.success);
                 commit('setMessage', res.data.msg);
+                commit('setFetchedUser', res.data.user);
                 return true;
             }
             return false;

@@ -95,7 +95,7 @@ export default Vue.extend({
         justify-items: start;
 
         @include respond(tab-land) {
-            width: 60rem;
+            width: 50rem;
             grid-template-columns: 10rem 50rem;
         }
 

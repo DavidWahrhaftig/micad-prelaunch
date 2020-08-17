@@ -22,12 +22,17 @@
                     {{ user.email }}
                 </div>
                 <div class="visitor-ips">
-                    <div class="visitor-ip" v-for="ip in user.ips" :key="ip">
-                        {{ ip }}
+                    <div class="visitor-ip" v-for="ipInfo in user.ips" :key="ipInfo.ip">
+                        {{ ipInfo.ip }}
                     </div>
                 </div>
                 <div class="visitor-verified">
-                    <input readonly type="checkbox" class="form__checkbox" :checked="user.authUrlVerified"/>
+                    <input readonly 
+                           type="checkbox" 
+                           class="form__checkbox"
+                           style="display: block;" 
+                           v-for="ipInfo in user.ips" :key="ipInfo.ip"
+                           :checked="ipInfo.authUrlVerified"/>
                 </div>
             </div>
         </div>

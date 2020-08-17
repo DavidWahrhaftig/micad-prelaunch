@@ -47,29 +47,25 @@ export default Vue.extend({
         // color: $color-grey-romanian;
         // margin-top: 45px;
 
-        @include respond(tab-port) {
-            // padding: 0 4rem;
-        }
-        @include respond(tab-land) {
-            padding: 0 8rem;
-        }
-        @include respond(desktop) {
-            padding: 0 12rem;
-        }
-        @include respond(big-desktop) {
-            padding: 0 20rem;
-        }
+        // @include respond(tab-port) {
+        //     // padding: 0 4rem;
+        // }
+        // @include respond(tab-land) {
+        //     padding: 0 8rem;
+        // }
+        // @include respond(desktop) {
+        //     padding: 0 12rem;
+        // }
+        // @include respond(big-desktop) {
+        //     padding: 0 20rem;
+        // }
     }
     
-    .header {
-        @include respond(tab-port) {
-            // margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-        }
-    }
 
     .grid {
         &__wrapper {
+            @include page-paddings;
+            
             & > * {
                 padding: 4rem 2rem;                
             }

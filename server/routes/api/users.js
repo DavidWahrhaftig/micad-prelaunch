@@ -40,6 +40,7 @@ router.get('/', (req, res) => {
         });
 });
 
+/**
 // CREATE user route: /api/users/:clientID
 router.post('/:clientID', async (req, res) => {
 
@@ -71,6 +72,54 @@ router.post('/:clientID', async (req, res) => {
         // const newUser = await User.create({clientID: req.body.clientID, email: req.body.email, ip: req.body.ip});
         const newUser = await User.create({clientID: req.params.clientID, email: req.body.email});
         newUser.ips.push(req.body.ip);
+        newUser.ips.push({ip: req.body.ip, platform: req.body.platform, authUrlVerified: false});
+        newUser.save();
+        res.status(201).json({
+            success: true,
+            user: newUser,
+            msg: 'Your IP has been recorded!'
+        });
+
+    } catch(err) {
+        res.status(404).json({
+            success: false,
+            msg: err.message
+        });
+    }
+}); */
+// CREATE user route: /api/users/:clientID
+router.post('/:clientID', async (req, res) => {
+
+
+    try {
+        // check client exists
+        const foundClient = await Client.findById(req.params.clientID);
+        if (!foundClient) {
+            return  res.status(404).json({
+                success: false,
+                msg: "Client ID did not match an existing Client"
+            });
+        }
+
+        const foundUser = await User.findOne({ email: req.body.email });
+
+        // check if user exists already
+        if (foundUser) {
+            return  res.status(409).json({
+                    success: false,
+                    msg: "User Already Exists"
+                });
+        }
+
+        // create user and add ip to its ips list
+        const ipInfo = {
+            ip: req.body.ip,
+            platform: req.body.platform, // browser and os information of device this ip was recorded on
+            authUrlVerified: false
+        }
+
+        const newUser = await User.create({clientID: req.params.clientID, email: req.body.email});
+        newUser.ips.push(ipInfo);
         newUser.save();
         res.status(201).json({
             success: true,
@@ -87,7 +136,7 @@ router.post('/:clientID', async (req, res) => {
 });
 
 
-// Update User route: /api/users/
+// Update User route: /api/users/:clientID
 router.put('/:clientID', async(req, res) => {
     // check client exists
     try {
@@ -113,9 +162,16 @@ router.put('/:clientID', async(req, res) => {
                 // Overwrite previous IPs
                 if (req.body.overwriteIP) {
                     user.ips = [];
-                    msg = "Your IP has been updated! "
+                    msg = "Your IP has been updated! Overwriting the old ip(s)"
                 } 
-                user.ips.push(req.body.ip);
+
+                const ipInfo = {
+                    ip: req.body.ip,
+                    platform: req.body.platform,
+                    authUrlVerified: false
+                }
+                // user.ips.push(req.body.ip);
+                user.ips.push(ipInfo);
                 user.save();
 
                 res.status(201).json({
@@ -143,40 +199,30 @@ router.put('/:clientID', async(req, res) => {
 router.put('/verifyAuthURL/:userID', async(req, res) => {
     // check client exists
     try {
-        // const foundClient = await Client.findById(req.params.clientID);
-        // if (!foundClient) {
-        //     return  res.status(404).json({
-        //         success: false,
-        //         msg: "Client ID did not match an existing Client"
-        //     });
-        // }
+        // User.findById(req.params.userID)
+        const user = await User.findById(req.params.userID);
+        const index = user.ips.findIndex(ipInfo => {return ipInfo.ip == req.body.ip});
+        if (index == -1) throw {message: 'Cannot update an ip that is not registered'};
+        // console.log(user.ips[index]._id);
+        // user.save();
 
-        User.findByIdAndUpdate(req.params.userID, {authUrlVerified: req.body.verification})
-            .then(user => {
+        // update the auth url verification of the ip
+        await User.updateOne(
+                {_id: user._id, 'ips._id': user.ips[index]._id}, 
+                {'$set': {'ips.$.authUrlVerified': req.body.verification}}
+            );
 
-                // if (user.clientID != req.params.clientID) {
-                //     return  res.status(404).json({
-                //         success: false,
-                //         msg: `The client ${foundClient.clientName} doesn't have this user`
-                //     });
-                // }
-
-                res.status(201).json({
-                    success: true,
-                    user,
-                    msg: 'Updated auth url verfication status for user'
-                });
-            }).catch(err => {
-                res.status(404).json({
-                    success: false,
-                    msg: err.message
-                });
-            });
+        res.status(201).json({
+            success: true,
+            user,
+            msg: 'Updated auth url verfication status for user'
+        });
 
     } catch (err) {
+        // console.log(err);
         res.status(404).json({
             success: false,
-            msg: err.message
+            msg: err.message 
         });
     }
     
