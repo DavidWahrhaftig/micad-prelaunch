@@ -1,10 +1,6 @@
 <template>
     <div>
         <h3 v-if="users.length == 0">No visitors have registered</h3>
-        <!-- <ul class="ip__list u-margin-bottom-medium">
-            <li class="ip__item" v-for="({ip, email}, i) in ips" :key="i">{{ ip }} <span class="ip__item--email">{{email}}</span> </li>
-        </ul> -->
-
         <div class="visitors u-margin-bottom-medium">
             <div class="visitor visitor--title">
                 <div>
@@ -74,32 +70,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-    .ip {
-        &__list {
-             list-style-type: none;
-                          
-        }
-
-        &__item {
-
-            &:not(:last-child) {
-                margin-bottom: 1rem;
-            }
-
-            width: 36rem;
-            margin: 0 auto; 
-            padding: 1rem 2rem; 
-            font-size: $default-font-size;
-            color: $color-primary; 
-            background-color: rgba($color-secondary, 0.3);
-            // border-radius: $edge-roundness;
-
-            &--email {
-                color: $color-secondary-dark;
-            }
-          
-        }
-    }
 
     .visitor {
         display: grid;
@@ -108,43 +78,52 @@ export default Vue.extend({
         grid-template-columns: 40% 35% 25%;
 
         @include respond(tab-land) {
-            grid-template-columns: 40% 35% 25%;
+            grid-template-columns: 30% 40% 30%;
         }
         font-size: $default-font-size;
         color: $color-primary; 
         background-color: rgba($color-secondary, 0.3);
-        justify-items: start;
+        // justify-items: start;
+        justify-items: center;
         padding: 0.5rem;
+        
         // &:not(:last-child) {
         //     margin-bottom: 1rem;
         // }
 
+        &:nth-child(odd) {
+            // background-color: rgba($color-secondary, 0.6);
+            background-color: $color-secondary-light;
+        } 
         &:nth-child(even) {
-            background-color: rgba($color-secondary, 0.3);
+            // background-color: rgba($color-secondary, 0.3);
+            background-color: $color-secondary-lighter;
         }
 
-        &:nth-child(odd) {
-            background-color: rgba($color-secondary, 0.6);
-        }
+       
+
 
         &--title {
             color: $color-black; 
-            & > * {
-                justify-self: center;
-            }
+            // & > * {
+            //     justify-self: center;
+            // }
             
         }
         &-email {
             color: $color-secondary-dark;
             padding-left: 1rem;
+            // justify-self: center;
         }
 
         &-ips {
-            justify-self: center;
+            // justify-self: center;
         }
 
         &-verified {
-            justify-self: center;
+            // justify-self: center;
+            display: grid;
+            align-items: center;
         }
     }
 
