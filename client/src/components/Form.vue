@@ -125,7 +125,7 @@ export default Vue.extend({
                     console.log('verification changed');
                     // this.setMessage('');
 
-                    if (this.loadedUser) {
+                    if (this.loadedUser || this.submitSuccess) {
                         const res = await this.verifyAuthUrl(newVal);
                         console.log(res);
                         // if (res.data.success) {

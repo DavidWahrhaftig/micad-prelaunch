@@ -132,6 +132,7 @@ export default Vue.extend({
         &-email {
             color: $color-secondary-dark;
             padding-left: 1rem;
+            overflow:hidden;
             // justify-self: center;
         }
 
@@ -140,6 +141,12 @@ export default Vue.extend({
             // justify-self: center;
             text-decoration: none;
             border-bottom: 0.2rem solid transparent;
+            &:not(:last-child) {
+                margin-bottom: 1rem;
+                @include respond(tab-port) {
+                    margin-bottom: 0;
+                }
+            }
             &:hover {
 
                 border-bottom: 0.2rem solid currentColor;
