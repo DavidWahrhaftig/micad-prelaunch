@@ -35,11 +35,8 @@ export default Vue.extend({
     computed: {
         formattedInfo() {
 
-            let device = `${this.ipInfo.platform.manufacturer} ${this.ipInfo.platform.product}`;
-            if (!this.ipInfo.platform.product) {
-                device = "unknown";
-            }
-
+            const device = this.ipInfo.platform.product || 'unknown';
+            
             return [ 
                 { title: 'IP', content: this.ipInfo.ip},
                 { title: 'User', content: this.ipInfo.email},
