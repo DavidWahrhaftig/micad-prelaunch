@@ -69,4 +69,9 @@
         }
 
     }
+
+    &--disabled {
+        background-color: $color-grey-light-2;// $color-grey-romanian-2;
+        border-color: $color-grey-light-2;// $color-grey-romanian-2;
+    }
 }

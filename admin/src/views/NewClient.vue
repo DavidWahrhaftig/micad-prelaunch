@@ -13,7 +13,7 @@
                 <div class="alert alert--invalid">Name already exists</div>
             </div>
             <div class="form__group">
-                <button :disabled="!isNameValid" class="button" @click="createClient(clientName)">
+                <button :disabled="!isNameValid" class="button" :class="[{'button--disabled': !isNameValid}]" @click="createClient(clientName)">
                     Create
                 </button>
             </div>            

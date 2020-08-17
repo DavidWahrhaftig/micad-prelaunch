@@ -128,7 +128,7 @@ export default Vue.extend({
                     if (this.loadedUser || this.submitSuccess) {
                         const res = await this.verifyAuthUrl(newVal);
                         console.log(res);
-                        // if (res.data.success) {
+                        // if (res) {
 
                         // }
                         

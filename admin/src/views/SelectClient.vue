@@ -106,7 +106,7 @@ export default Vue.extend({
         // font-size: 2rem;
         font-weight: 600;
         font-family: 'Comfortaa', cursive !important;
-        background-color: rgba($color-secondary, 0.7);
+        background-color: $color-secondary-light;
         padding: 0.5rem;
             
     }

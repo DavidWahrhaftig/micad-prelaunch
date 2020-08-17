@@ -18,7 +18,7 @@
                     {{ user.email }}
                 </div>
                 <div class="visitor-ips">
-                    <a href="#popup" 
+                    <a 
                        class="visitor-ip" 
                        v-for="ipInfo in user.ips" :key="ipInfo.ip"
                        @click="selectIp(ipInfo, user)">
@@ -43,7 +43,7 @@
         <!-- <button class="button" @click="fetchUsers($store.getters.clientSelected._id)">
             Copy IPS
         </button> -->
-        <app-ip-info-popup v-if="ipSelected" :ipInfo="ipSelected"/>
+        <app-ip-info-popup :ipInfo="ipSelected" :hidePopup="hidePopup" @hide-popup="hidePopup = true"/>
 
     </div>
 </template>
@@ -61,12 +61,14 @@ export default Vue.extend({
     data() {
         return {
             ipSelected: null,
+            hidePopup: true
         }
     },
     methods: {
         ...mapActions(['fetchUsers']),
         selectIp(ipInfo, user) {
             this.ipSelected = {...ipInfo, email: user.email};
+            this.hidePopup = false;
         }
     },
     computed: {
@@ -141,6 +143,7 @@ export default Vue.extend({
             // justify-self: center;
             text-decoration: none;
             border-bottom: 0.2rem solid transparent;
+            cursor: pointer;
             &:not(:last-child) {
                 margin-bottom: 1rem;
                 @include respond(tab-port) {

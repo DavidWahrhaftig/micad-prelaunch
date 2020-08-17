@@ -1,5 +1,5 @@
 <template>
-    <div class="popup" id="popup">
+    <div class="popup" v-if="ipInfo" :class="[{'popup--hide': hidePopup}]" id="popup">
             <div class="popup__content">
                 <!-- <div class="popup__left">
                     <img src="img/nat-8.jpg" alt="Tour photo" class="popup__img">
@@ -17,13 +17,13 @@
 
                 <div class="heading-primary--main">IP Information</div>
 
-                <div class="popup__table" v-for="item in formattedInfo" :key="item.title">
+                <div class="popup__table"  v-for="item in formattedInfo" :key="item.title">
                     <div class="popup__table-left">{{item.title}}</div>
                     <div class="popup__table-right">{{item.content}}</div>
                 </div>
                 <!-- <div class="heading-primary--sub">User Email: {{ ipInfo.email }}</div> -->
 
-                <a href="#" class="button u-margin-top-small">Go back</a>
+                <button class="button u-margin-top-small" @click="$emit('hide-popup')">Go back</button>
             </div>
         </div>
 </template>
@@ -31,17 +31,30 @@
 <script>
 import Vue from 'vue';
 export default Vue.extend({
-    props: ['ipInfo'],
+    props: ['ipInfo', 'hidePopup'],
     computed: {
         formattedInfo() {
+
+            let device = `${this.ipInfo.platform.manufacturer} ${this.ipInfo.platform.product}`;
+            if (!this.ipInfo.platform.product) {
+                device = "unknown";
+            }
+
             return [ 
                 { title: 'IP', content: this.ipInfo.ip},
                 { title: 'User', content: this.ipInfo.email},
+                { title: 'Device', content: device},
                 { title: 'OS', content: `${this.ipInfo.platform.os.family} ${this.ipInfo.platform.os.version}`},
                 { title: 'Browser', content: `${this.ipInfo.platform.name} ${this.ipInfo.platform.version}`},
                 { title: 'Auth Verified', content: this.ipInfo.authUrlVerified}
+                
             ]
         }
+    },
+    methods: {
+        // hidePopup() {
+        //     this.$emit('hidePopup');   
+        // }
     }
 
 
@@ -58,8 +71,8 @@ export default Vue.extend({
     left: 0;
     background-color: rgba($color-black, 0.8);
     z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 1;
+    visibility: visible;
     transition: all 0.5s;
 
     &__content {
@@ -69,11 +82,11 @@ export default Vue.extend({
         box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
         border-radius: 0.3rem;
         display: table;
-        overflow: hidden; // since imgs overflow the rounded corners
+        overflow: visible; // since imgs overflow the rounded corners
 
-        opacity: 0;
+        opacity: 1;
         padding: 1.5rem 1.5rem;
-        transform: translate(-50%, -50%) scale(0.25);
+        transform: translate(-50%, -50%) scale(1);
         transition: all 0.5s 0.2s; // 0.5 is the duration of the transition and 0.2s is the delay 
 
         @include respond(tab-port) {
@@ -128,10 +141,20 @@ export default Vue.extend({
         opacity: 1;
         visibility: visible;
     }
+    &--hide { // when a link to this element with id #popup is clicked or url has #popup in it
+        opacity: 0;
+        visibility: hidden;
+    }
 
     &:target &__content {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
+    }
+
+    &--hide &__content{ // when a link to this element with id #popup is clicked or url has #popup in it
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%,  -50%) scale(0.25);
     }
 
     // &__close {
