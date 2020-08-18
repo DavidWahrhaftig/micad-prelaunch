@@ -90,7 +90,7 @@
             
             <!-- sso enable switch -->
             <div class="form__group form__group--switch">
-                    <label for="enable" class="form__label">Auth Switch</label>
+                    <label for="enable" class="form__label">Authentication</label>
                     <div class="form__switch-container">
                         <label for="ssoEnable" class="form__switch">
                             <input type="checkbox" 
@@ -104,7 +104,7 @@
             </div>
             <!-- auth url -->
             <div class="form__group" v-if="client.ssoEnable">
-                <label for="authUrl" class="form__label">Auth URL</label>
+                <label for="authUrl" class="form__label">Authentication URL</label>
                 <input type="url" 
                        class="form__input" 
                        placeholder="URL" 
