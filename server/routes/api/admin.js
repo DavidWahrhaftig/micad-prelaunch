@@ -59,6 +59,7 @@ router.post('/', (req, res) => {
 router.put('/:clientID', (req, res) => {
     // let adminSettings = req.body.adminSettings;
     // adminSettings.launchDate = new Date(adminSettings.launchDate);
+    console.log(req.body);
     Client.findByIdAndUpdate(req.params.clientID, req.body)
         .then(client => {
             res.status(201).json({

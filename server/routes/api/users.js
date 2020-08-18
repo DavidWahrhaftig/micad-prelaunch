@@ -101,7 +101,7 @@ router.post('/:clientID', async (req, res) => {
             });
         }
 
-        const foundUser = await User.findOne({ email: req.body.email });
+        const foundUser = await User.findOne({ email: req.body.email, clientID: req.params.clientID});
 
         // check if user exists already
         if (foundUser) {

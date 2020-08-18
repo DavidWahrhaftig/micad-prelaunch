@@ -24,7 +24,7 @@ const ClientSchema = new mongoose.Schema(
             required: true
         },
         launchDate: {
-            type: Date,
+            type: String,
             default: null
         },
         // publicEnable: {

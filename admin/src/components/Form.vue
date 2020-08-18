@@ -83,7 +83,7 @@
                         class="form__input" 
                         id="date"
                         :value="toDateString"
-                        @input="client.launchDate = $event.target.value" 
+                        @input="setClientLaunchDate" 
                         >
                 
             </div>
@@ -240,6 +240,11 @@ export default Vue.extend({
         async submitForm() {
             const success = await this.updateClient(this.client);
             this.$emit('submitted', success);
+        },
+        setClientLaunchDate($event) {
+            // const date = $event.target.value.split('-').join('/');
+            // this.client.launchDate = date;
+            this.client.launchDate = $event.target.value;
         }
     },
 
