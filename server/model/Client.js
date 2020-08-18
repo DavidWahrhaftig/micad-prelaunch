@@ -48,6 +48,10 @@ const ClientSchema = new mongoose.Schema(
             type: String,
             default: 'http://www.updates.micadipr.net/ReleaseNotes/IPR/iprGAReleaseNotes_3_6_0.pdf'
         },
+        faq: {
+            type: String,
+            default: 'http://www.updates.micadipr.net/ReleaseNotes/IPR/IPR3.6onboardingFAQ-Version1.0.pdf'
+        },
         authUrl: {
             type: String,
             default: 'https://accounts-bradfordhospitals.micadipr.net/'

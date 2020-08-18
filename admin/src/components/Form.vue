@@ -64,6 +64,18 @@
                        rows="4"
                        v-model="client.instructionsText"></textarea>
             </div>
+
+            <!-- FAQ url -->
+            <div class="form__group">
+                <label for="faq" class="form__label">On-boarding FAQ link</label>
+                <input type="url" 
+                       class="form__input" 
+                       placeholder="FAQ Link" 
+                       id="faq"
+                       v-model="client.faq" 
+                       >
+            </div>
+
             <!-- launchdate -->
             <div class="form__group">
                     <label for="date" class="form__label form__label-date">Launch date</label>
@@ -78,7 +90,7 @@
             
             <!-- sso enable switch -->
             <div class="form__group form__group--switch">
-                    <label for="enable" class="form__label">SSO (on/off)</label>
+                    <label for="enable" class="form__label">Auth Switch</label>
                     <div class="form__switch-container">
                         <label for="ssoEnable" class="form__switch">
                             <input type="checkbox" 
@@ -92,7 +104,7 @@
             </div>
             <!-- auth url -->
             <div class="form__group" v-if="client.ssoEnable">
-                <label for="authUrl" class="form__label">Authentication URL</label>
+                <label for="authUrl" class="form__label">Auth URL</label>
                 <input type="url" 
                        class="form__input" 
                        placeholder="URL" 

@@ -19,13 +19,16 @@
                     tag="a"
                     >Instructions</router-link>
             <a  class="nav__link"
-                :href="$store.getters.clientConfig.releaseNotes"
+                @click="openWindow($store.getters.clientConfig.faq)"
+                >On-boarding FAQ</a>
+            <a  class="nav__link"
+                @click="openWindow($store.getters.clientConfig.releaseNotes)"
                 >Release Notes</a>
             <a  class="nav__link"
-                href="https://micad.co.uk/"
+                @click="openWindow('https://micad.co.uk/')"
                 >micad Website</a>
             <a  class="nav__link"
-                href="https://support.zoho.com/portal/micad/en/signin"
+                @click="openWindow('https://support.zoho.com/portal/micad/en/signin')"
                 >Contact Support</a>
             <a  class="nav__link"
                 href="#"
@@ -47,7 +50,10 @@
 import { mapActions } from 'vuex'
 export default {
     methods: {
-        ...mapActions(['removeClientID'])
+        ...mapActions(['removeClientID']),
+        openWindow(url) {
+            window.open(url, '_blank');
+        }
     }
 }
 </script>
@@ -60,6 +66,7 @@ export default {
             text-decoration: none;
             color: $color-white;
             padding: 1rem 4.5rem;
+            cursor: pointer;
             // border-radius: $edge-roundness;
             // background-color: $color-primary;
             // display: inline-block;
