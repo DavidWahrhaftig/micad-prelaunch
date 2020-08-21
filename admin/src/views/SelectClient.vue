@@ -23,7 +23,7 @@
             <h2 class="client-selection__heading">Client ID to share with users:</h2>
             <div class="client-selection__display">
                 <h2 class="client-selection__id">{{seletectedClient._id}}</h2>
-                <button class="button button-copy-to-clipboard" @click="copyToClipBoard(seletectedClient._id)">Copy to Clipboard</button>
+                <button class="button button-paste-to-clipboard" @click="copyToClipBoard(seletectedClient._id)">Copy to Clipboard</button>
             </div>
             <button class="button button--delete u-margin-top-small" @click="alertBeforeDeleting(seletectedClient)">Delete Client</button>
         </div>

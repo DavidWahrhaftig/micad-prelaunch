@@ -86,11 +86,8 @@
         // width: 100%;
     }
 
-    &-copy-to-clipboard {
-        display: inline-block;
-        // margin: 0 1rem;
+    &-copy-to-clipboard, &-paste-to-clipboard {
         padding: 0;
-        // text-align:;
         width: 12rem;
     }
 }
