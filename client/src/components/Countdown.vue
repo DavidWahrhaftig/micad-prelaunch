@@ -1,15 +1,13 @@
 <template>
     <div class="section-countdown">
-        
-        <h1 class="countdown" v-if="isLaunched">Your micad system was Launched on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
-        <h1 class="countdown" v-else><span class="countdown__days">{{remainingDays}}</span> days to launch date on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
-            
-        <div>
-            <h3 class="heading-primary--sub" v-if="isLaunched">Your URLs are:</h3>
-            <h3 class="heading-primary--sub" v-else>Your URLs will be:</h3>
-            
+        <h1 class="countdown" v-if="!launchDate">Launch date hasn't been set yet</h1>
+        <div v-else>
+            <h1 class="countdown" v-if="isLaunched">Your micad system was Launched on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
+            <h1 class="countdown" v-else><span class="countdown__days">{{remainingDays}}</span> day<span v-if="!isOneDayLeft">s</span> to launch date on <span class="countdown__date">{{ prettyLaunchDate }}</span></h1>
         </div>
-
+        
+        <h3 class="heading-primary--sub" v-if="launchDate && isLaunched">Your URLs are:</h3>
+        <h3 class="heading-primary--sub" v-else>Your URLs will be:</h3>
        
         <div class="url-grid" v-for="(item, i) in urls" :key="i">
             <div class="url-grid__item url-grid__item--title">{{ item.title }}:</div>
@@ -53,7 +51,9 @@ export default Vue.extend({
 
             const remainingDays = (Math.round(this.launchDate.getTime() - today.getTime()) / oneDay).toFixed(0);
             return remainingDays;
-
+        },
+        isOneDayLeft() {
+            return this.remainingDays == 1;
         },
         isLaunched() {
             return this.remainingDays < 1;
@@ -84,8 +84,6 @@ export default Vue.extend({
         
     }
 
-
-
     .url-grid {
         margin: 0 auto;
         width: 40rem;
@@ -97,24 +95,6 @@ export default Vue.extend({
         @include respond(tab-land) {
             width: 50rem;
             grid-template-columns: 10rem 50rem;
-        }
-
-        &--auth {
-            margin: 0 auto;
-            width: 40rem;
-            display: grid;
-            // grid-template-columns: 8rem 35rem 5rem;
-            grid-template-columns: 25% 55% 20%;
-            justify-items: stretch;
-            @include respond(tab-port) {
-                width: 100%;
-                // width: 70rem;
-                grid-template-columns: 20% 65% 15%;
-            }
-            // @include respond(tab-land) {
-            //     width: 60rem;
-            //     grid-template-columns: 10rem 40rem 10rem;
-            // }
         }
 
         &__item {
@@ -133,31 +113,7 @@ export default Vue.extend({
             }
         }
     }
-    .url {
-        
-        &__list {
-            list-style-type: none;
-            // width: 60rem;
-            
-        }
-
-        &__item {
-            font-size:1.8rem;
-            // text-align: left;
-            &-title {
-                font-weight: 600;
-                margin-right: 2rem;
-            }
-        }
-
-        &__link {
-            &, &:link, &:visited {
-                // text-decoration: none;
-            }
-            
-        }
-        
-    }
+    
 
 
 </style>

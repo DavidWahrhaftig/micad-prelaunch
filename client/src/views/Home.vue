@@ -27,8 +27,12 @@ export default Vue.extend({
             // console.log(month);
             // console.log(day);
             // return new Date(`${year}/${month}/${day}`);
-            const dateString =  this.$store.state.Client.clientConfig.launchDate.split('-').join('/');
-            return new Date(dateString);
+            if (this.$store.state.Client.clientConfig.launchDate) {
+                const dateString =  this.$store.state.Client.clientConfig.launchDate.split('-').join('/');
+                return new Date(dateString);
+            }
+            return null;
+            
             
         }
     }

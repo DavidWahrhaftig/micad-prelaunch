@@ -211,12 +211,12 @@ import { mapActions } from 'vuex';
 export default Vue.extend({
     data() {
         return {
-            settings: {
-                enable: false,
-                title: 'Default',
-                launchDate: null,
-                urls: [],
-            },
+            // settings: {
+            //     enable: false,
+            //     title: 'Default',
+            //     launchDate: null,
+            //     urls: [],
+            // },
             newUrl: {title: '', url: ''},
             client: {}
         }
