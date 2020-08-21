@@ -13,9 +13,7 @@
             <div class="url-grid__item url-grid__item--title">{{ item.title }}:</div>
             <a :href="item.url" target="_blank" class="url-grid__item url-grid__item--url">{{ item.url }}</a>
         </div>
-        
-        
-        
+
     </div>
 </template>
 

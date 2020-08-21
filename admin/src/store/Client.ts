@@ -96,6 +96,15 @@ const actions = {
     },
     deselectClient({commit}: any) {
         commit('setClientSelected', null);
+    },
+    async deleteClient({commit}: any, clientID: string) {
+        try {
+            const res = await axios.delete(`api/admin/${clientID}`);
+            console.log(res.data.msg);
+            location.reload();
+        } catch(err) {
+            console.log(err.message);
+        }
     }
 }
 

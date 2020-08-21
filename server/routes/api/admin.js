@@ -119,5 +119,22 @@ router.get('/nameValid/:clientName', (req,res) => {
     });
 });
 
+router.delete('/:clientID', async (req, res) => {
+    try {
+        const removedClient = await Client.findByIdAndRemove(req.params.clientID);
+        const removedUsers = await User.deleteMany({clientID: req.params.clientID});
+
+        res.status(201).json({
+            success: true,
+            msg: 'Removed Client and their users successfully'
+        });
+
+    } catch(err) {
+        res.status(404).json({
+            success: false,
+            msg: err.message
+        });
+    }
+});
 
 module.exports = router;

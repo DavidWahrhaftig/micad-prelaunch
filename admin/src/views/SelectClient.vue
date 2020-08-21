@@ -10,10 +10,7 @@
                     <option v-for="(client, i) in clients" :key="i" :value="i">{{client.clientName}}</option>
                 </select>
             </div>
-            <div v-if="seletectedClient">
-                <h2>Client ID to share with users:</h2>
-                <h2 class="highlight">{{seletectedClient._id}}</h2>
-            </div>
+            
             <!-- <div class="form__group u-margin-top-small" v-if="$store.getters.clientSelected">
                 <button class="button" @click="goToSettings">
                     Go to Settings
@@ -22,7 +19,14 @@
             
             
         </form>
-        
+        <div class="client-selection" v-if="seletectedClient">
+            <h2 class="client-selection__heading">Client ID to share with users:</h2>
+            <div class="client-selection__display">
+                <h2 class="client-selection__id">{{seletectedClient._id}}</h2>
+                <button class="button button-copy-to-clipboard" @click="copyToClipBoard(seletectedClient._id)">Copy to Clipboard</button>
+            </div>
+            <button class="button button--delete u-margin-top-small" @click="alertBeforeDeleting(seletectedClient)">Delete Client</button>
+        </div>
     </div>
 </template>
 
@@ -60,7 +64,7 @@ export default Vue.extend({
         }
     },
     methods: {
-        ...mapActions(['fetchClients', 'chooseClient', 'deselectClient']),
+        ...mapActions(['fetchClients', 'chooseClient', 'deselectClient', 'deleteClient']),
         // selectClient() {
         //     if (this.seletectedClient) {
         //         this.chooseClient(this.seletectedClient);
@@ -71,6 +75,15 @@ export default Vue.extend({
         // },
         goToSettings() {
             this.$router.push('/settings');
+        },
+        async copyToClipBoard(content) {
+            window.navigator.clipboard.writeText(content);
+        },
+        async alertBeforeDeleting(client) {
+            const del = confirm(`Are you sure you want to delete the client ${client.clientName}? This will also delete all of ${client.clientName}'s users.`);
+            if (del) {
+                await this.deleteClient(client._id);
+            }
         }
     },
     async created(){
@@ -99,15 +112,35 @@ export default Vue.extend({
     //     }
     // }
 
-    .highlight {
-        display: inline-block;
-       
-        color: $color-primary;
-        // font-size: 2rem;
-        font-weight: 600;
-        font-family: 'Comfortaa', cursive !important;
-        background-color: $color-secondary-light;
-        padding: 0.5rem;
+    .client-selection {
+
+         width: 42rem;
+         margin: 2rem auto;
+
+        &__heading {
+            font-size: 1.8rem;
+            text-align: left;
             
+            display: block;
+        }
+
+        &__display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+
+        &__id {
+            display: inline-block;
+            color: $color-primary;
+            font-size: 2rem;
+            font-weight: 600;
+            font-family: 'Comfortaa', cursive !important;
+            background-color: $color-secondary-light;
+            padding: 0.5rem;
+        }
     }
+
+   
 </style>

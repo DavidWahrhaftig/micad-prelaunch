@@ -4,9 +4,9 @@
         <div class="heading-primary--sub-big u-margin-bottom-small">
             {{contentTitle}}
         </div>
-        <!-- <keep-alive include="SelectClient"> -->
+        <keep-alive include="SelectClient">
         <router-view></router-view>
-        <!-- </keep-alive> -->
+        </keep-alive>
     </div>
 </template>
 
