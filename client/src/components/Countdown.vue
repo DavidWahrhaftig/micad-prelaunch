@@ -11,7 +11,7 @@
        
         <div class="url-grid" v-for="(item, i) in urls" :key="i">
             <div class="url-grid__item url-grid__item--title">{{ item.title }}:</div>
-            <a class="url-grid__item url-grid__item--url">{{ item.url }}</a>
+            <a :href="item.url" target="_blank" class="url-grid__item url-grid__item--url">{{ item.url }}</a>
         </div>
         
         
@@ -21,12 +21,15 @@
 
 <script>
 import Vue from 'vue';
+import axios from 'axios';
+// import urlExists from 'url-exists';
 
 export default Vue.extend({
     props: ['launchDate', 'urls'],
     data() {
         return {
-            verified: false
+            verified: false,
+            urlsValidation: []
         }
     },
     computed:{
@@ -63,7 +66,23 @@ export default Vue.extend({
         shortenUrl(url) {
             return url.replace("https://", "").replace(".micadipr.net/", "");
         }
-    }
+    },
+    methods: {
+        async validateUrl(url) {
+            try {
+                const res = await axios.get(url);
+                console.log(res);
+                return true
+            } catch (err) {
+                // console.log(err.message);
+                return false;
+            }
+        },
+        openTab(url) {
+            window.open(url, '_blank');
+        }
+    },
+    
 });
 </script>
 
@@ -110,6 +129,9 @@ export default Vue.extend({
 
             &--url {
                 // grid-area: url;
+                &, &:link, &:visited {
+                    color: $color-primary;
+                }
             }
         }
     }
