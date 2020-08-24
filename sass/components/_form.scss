@@ -122,6 +122,23 @@
         @include respond(tab-land) {
             font-size: 1.5rem;
             padding: 1rem 2rem;
+            // &--email {
+            //     width: 50rem;
+            //     // margin: 0 auto;
+            // }
+        }
+
+        &--email {
+            @include respond(tab-port) {
+                width: 50rem;
+                margin: 0 auto;
+            }
+            @include respond(tab-land) {
+                width: 100%;
+            }
+            @include respond(desktop) {
+                width: 50rem;
+            }
         }
 
         &:focus {

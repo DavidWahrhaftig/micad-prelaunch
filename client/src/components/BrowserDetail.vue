@@ -68,7 +68,7 @@ export default {
 
     .detail {
         // text-align: left;
-        width: 40rem;
+        width: 35rem;
         font-size: $default-font-size;
         margin: 0 auto;
         display: flex;
@@ -77,8 +77,12 @@ export default {
 
 
         @include respond(tab-port) {
+            width: 45rem;
+            font-size: 2rem;
+        }
+        @include respond(tab-land) {
             width: 50rem;
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
 
         &__text {
@@ -89,6 +93,7 @@ export default {
                 // padding-left: 1rem;
                 color: $color-primary;
                 // float: right;
+                text-align: right;
                 
             }
         }

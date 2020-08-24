@@ -40,19 +40,22 @@
         /* for animation of chldren not to have a glitch */
         padding: 2rem;
         padding-top: 0;
+        // padding-bottom: 0;
         backface-visibility: hidden;
         @include respond(tab-port) {
             justify-self: start;
+            align-self: end;
             // color: $color-white;
             padding-top: 1.5rem;
             // margin-left: 2rem;
             // align-self: st;
         }
         @include respond(tab-land) {
-            // justify-self: start;
+            justify-self: center;
             // margin-left: 2rem;
             // align-self: st;
-            text-align: left;
+            // text-align: left;
+
         }
 
         &--main {
@@ -66,12 +69,14 @@
         }
 
         &--sub {
-            display: block;
+            display: none;
             font-size: 1.6rem;
             font-weight: 400;
             letter-spacing: 0.7rem;
             word-spacing: 1rem;
+
             @include respond(tab-port) {
+                display: block;
                 // font-size: 1.4rem;
                 // word-spacing: 0.5rem;
                 letter-spacing: 0.4rem;

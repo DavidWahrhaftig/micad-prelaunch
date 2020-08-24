@@ -4,7 +4,7 @@
             <div class="form__group">
                 <!-- <label for="email" class="form__label">Email address</label> -->
                 <input type="email" 
-                       class="form__input" 
+                       class="form__input form__input--email" 
                        placeholder="Email address" 
                        id="email" 
                        :value="email" @input="setEmail($event.target.value)"
