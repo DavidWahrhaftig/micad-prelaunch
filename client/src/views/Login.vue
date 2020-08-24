@@ -11,7 +11,7 @@
                        id="clientID"
                        v-model="clientID"
                        required>
-                <button class="button button-copy-to-clipboard" @click="pasteFromClipboard">paste from clipboard</button>
+                <button class="button button-copy-to-clipboard" @click.prevent="pasteFromClipboard">paste from clipboard</button>
                 
             </div>
             <button class="button" @click.prevent="fetchClient(clientID)" >

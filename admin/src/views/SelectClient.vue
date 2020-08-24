@@ -114,8 +114,12 @@ export default Vue.extend({
 
     .client-selection {
 
-         width: 42rem;
+         width: 37rem;
          margin: 2rem auto;
+
+         @include respond(tab-port) {
+             width: 42rem;
+         }
 
         &__heading {
             font-size: 1.8rem;
@@ -134,9 +138,9 @@ export default Vue.extend({
         &__id {
             display: inline-block;
             color: $color-primary;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            font-family: 'Comfortaa', cursive !important;
+            font-family: 'Comfortaa', cursive;
             background-color: $color-secondary-light;
             padding: 0.5rem;
         }
