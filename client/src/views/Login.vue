@@ -11,7 +11,7 @@
                        id="clientID"
                        v-model="clientID"
                        required>
-                <button class="button button-copy-to-clipboard" @click.prevent="pasteFromClipboard">paste from clipboard</button>
+                <button class="button button-copy-to-clipboard" @click.prevent="pasteFromClipboard">Paste From Clipboard</button>
                 
             </div>
             <button class="button" @click.prevent="fetchClient(clientID)" >
@@ -52,7 +52,7 @@ export default {
         &__display {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: stretch;
             
         }
 

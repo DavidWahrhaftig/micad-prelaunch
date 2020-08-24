@@ -14,7 +14,7 @@
             </div>
 
             <div class="header__title--sub">
-                Our place is your new space
+                Pre-launch Application
             </div>
         </div>
     </div>

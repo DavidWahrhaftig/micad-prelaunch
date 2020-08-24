@@ -131,7 +131,7 @@ export default Vue.extend({
         &__display {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: stretch;
             
         }
 
@@ -143,6 +143,10 @@ export default Vue.extend({
             font-family: 'Comfortaa', cursive;
             background-color: $color-secondary-light;
             padding: 0.5rem;
+            
+            // to center text inside a stretch flex item
+            display: flex;
+            align-items: center;
         }
     }
 
