@@ -19,16 +19,20 @@
                     tag="a"
                     >Instructions</router-link>
             <a  class="nav__link"
-                @click="openWindow($store.getters.clientConfig.faq)"
+                :href="$store.getters.clientConfig.faq"
+                target="_blank"
                 >On-boarding FAQ</a>
             <a  class="nav__link"
-                @click="openWindow($store.getters.clientConfig.releaseNotes)"
+                :href="$store.getters.clientConfig.releaseNotes"
+                target="_blank"
                 >Release Notes</a>
             <a  class="nav__link"
-                @click="openWindow('https://micad.co.uk/')"
+                href="https://micad.co.uk/"
+                target="_blank"
                 >micad Website</a>
             <a  class="nav__link"
-                @click="openWindow('https://support.zoho.com/portal/micad/en/signin')"
+                href="https://support.zoho.com/portal/micad/en/signin"
+                target="_blank"
                 >Contact Support</a>
             <a  class="nav__link"
                 href="#"
@@ -50,10 +54,7 @@
 import { mapActions } from 'vuex'
 export default {
     methods: {
-        ...mapActions(['removeClientID']),
-        openWindow(url) {
-            window.open(url, '_blank');
-        }
+        ...mapActions(['removeClientID'])
     }
 }
 </script>

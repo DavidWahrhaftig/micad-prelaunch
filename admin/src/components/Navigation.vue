@@ -25,6 +25,7 @@
         <a  
         class="nav__link"
         href="https://micad-prelaunch.herokuapp.com/client"
+        target="_blank"
         >Client View</a>
         <!-- <a  
         class="nav__link"
