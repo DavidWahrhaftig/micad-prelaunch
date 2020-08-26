@@ -137,6 +137,9 @@
                 width: 100%;
             }
             @include respond(desktop) {
+                width: 100%;
+            }
+            @include respond(big-desktop) {
                 width: 50rem;
             }
         }
