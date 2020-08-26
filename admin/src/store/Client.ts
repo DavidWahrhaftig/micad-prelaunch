@@ -54,7 +54,7 @@ const actions = {
             const res = await axios.post('/api/admin/', {clientName: clientName});
             if (res.data.success) {
                 await dispatch('fetchClients');
-                // router.push({name: 'Select Client'});
+                router.push({name: 'Select Client'});
             }
         } catch(err) {
             console.log(err);
@@ -105,6 +105,7 @@ const actions = {
         try {
             const res = await axios.delete(`api/admin/${clientID}`);
             console.log(res.data.msg);
+            // refresh page
             location.reload();
         } catch(err) {
             console.log(err.message);

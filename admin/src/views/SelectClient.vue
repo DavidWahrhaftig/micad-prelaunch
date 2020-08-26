@@ -9,16 +9,10 @@
                     <option selected value="default">Select Client</option>
                     <option v-for="(client, i) in clients" :key="i" :value="i">{{client.clientName}}</option>
                 </select>
-            </div>
-            
-            <!-- <div class="form__group u-margin-top-small" v-if="$store.getters.clientSelected">
-                <button class="button" @click="goToSettings">
-                    Go to Settings
-                </button>
-            </div> -->
-            
-            
+            </div>           
         </form>
+
+
         <div class="client-selection" v-if="seletectedClient">
             <h2 class="client-selection__heading">Client url to share with users:</h2>
             <div class="client-selection__display">
@@ -77,9 +71,6 @@ export default Vue.extend({
         //         console.log("must select a client");
         //     }
         // },
-        goToSettings() {
-            this.$router.push('/settings');
-        },
         async copyToClipBoard(content) {
             window.navigator.clipboard.writeText(content);
         },
