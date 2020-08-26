@@ -192,7 +192,8 @@
             <div class="form__group">
                 <button 
                         class="button"
-                        @click="submitForm"
+                        
+                        @click.prevent="submitForm"
                         >
                     Save
                 </button>

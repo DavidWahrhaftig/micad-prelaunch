@@ -54,7 +54,7 @@ const actions = {
             const res = await axios.post('/api/admin/', {clientName: clientName});
             if (res.data.success) {
                 await dispatch('fetchClients');
-                router.push('/');
+                // router.push({name: 'Select Client'});
             }
         } catch(err) {
             console.log(err);
