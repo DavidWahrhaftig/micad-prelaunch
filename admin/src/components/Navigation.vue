@@ -24,7 +24,8 @@
                 >Visitors</router-link>
         <a  
         class="nav__link"
-        href="https://micad-prelaunch.herokuapp.com/client"
+        :class="{'nav__link-disabled': !$store.getters.clientSelected}"
+        :href="$store.getters.clientUrl"
         target="_blank"
         >Client View</a>
         <!-- <a  

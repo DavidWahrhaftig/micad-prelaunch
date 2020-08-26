@@ -25,11 +25,18 @@ router.get('/clients', (req, res) => {
 router.get('/:clientID', (req, res) => {
     Client.findById(req.params.clientID)
         .then(client => {
-            res.status(200).json({
-                success: true,
-                client,
-                msg: 'Get Admin Config'
-            });
+            if(client) {
+                res.status(200).json({
+                    success: true,
+                    client,
+                    msg: 'Get Admin Config'
+                });
+            } else {
+                res.status(404).json({
+                    success: false,
+                    msg: 'Client ID invalid, client does not exist'
+                });
+            }
         }).catch(err => {
             res.status(404).json({
                 success: false,

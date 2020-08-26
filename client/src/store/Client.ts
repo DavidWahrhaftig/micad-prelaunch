@@ -3,7 +3,8 @@ import router from '../router';
 
 const state = {
     clientConfig: null,
-    clientID: localStorage.getItem('clientID') || '',
+    // clientID: localStorage.getItem('clientID') || '',
+    clientID: '',
 
 }
 const getters = {
@@ -19,34 +20,25 @@ const getters = {
 }
 const mutations = {
     setClientConfig(state: any, config: any) {
-        // state.clientID = config._id || '';
         state.clientConfig = config;
     },
     setClientID(state: any, clientID: any) {
         state.clientID = clientID;
-        // set local storage, header?
     }
 }
 const actions = {
     async fetchClient({commit}: any, clientID: string) {
         try {
-            const res = await axios.get(`api/admin/${clientID}`);
+            const res = await axios.get(`/api/admin/${clientID}`);
             console.log(res.data);
-            if (res.data.success) {
-                // commit("setClientID", clientID);
-                if (res.data.client) {
-                    commit("setClientConfig", res.data.client);
-                    commit("setClientID", res.data.client._id);
-                    localStorage.setItem('clientID', res.data.client._id);
-
-                    if (router.currentRoute.path != '/') {
-                        router.push('/');
-                    }   
-                }           
-            }
+            commit("setClientConfig", res.data.client);
+            commit("setClientID", res.data.client._id);
+            return true;           
+            
         } catch(err) {
             console.log("this client id is invalid");
             commit('setErrorMessage', 'Client ID is invalid');
+            return false;
         }
     },
 

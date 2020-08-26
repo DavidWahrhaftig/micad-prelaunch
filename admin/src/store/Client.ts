@@ -15,6 +15,10 @@ const getters = {
     },
     users(state: any): any {
         return state.users;
+    },
+    clientUrl(state: any): string {
+        if (state.clientSelected) return `${window.location.origin}/${state.clientSelected._id}`
+        return 'No Client Selected'
     }
 
 }

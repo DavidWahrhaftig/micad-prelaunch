@@ -77,22 +77,26 @@ app.use('/api/admin', admin);
 
 // }
 
-app.get('/', (req,res) => {
-    res.send("Invalid path, you may have meant /client");
-});
+// app.get('/', (req,res) => {
+//     res.send("Invalid path, you may have meant /client");
+// });
 
-app.get('/client',(req,res) =>{
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-});
 
 app.get('/admin', (req, res) => {
     // res.send("ADMIN PAGE");
     res.sendFile(path.join(__dirname, 'admin/index.html'));
 });
 
-app.get('*', (req, res) => {
-    res.send("Invalid path!")
+app.get('/:clientID',(req,res) =>{
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
+app.get('/:clientID/:someview',(req,res) =>{
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+// app.get('*', (req, res) => {
+//     res.send("Invalid path!")
+// });
 
 
 

@@ -12,7 +12,7 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path:'/',
+        path:'',
         name: 'Select Client',
         component: SelectClient
     },
@@ -50,8 +50,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    // mode: 'history',
-    base: process.env.BASE_URL,
+    mode: 'history',
+    base: process.env.BASE_URL + 'admin',
     routes
   })
   

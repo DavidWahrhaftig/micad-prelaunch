@@ -11,8 +11,8 @@
 
 <script>
 import Vue from 'vue';
-import Form from '../components/Form.vue';
-import BrowserDetail from '../components/BrowserDetail.vue';
+import Form from '@/components/Form.vue';
+import BrowserDetail from '@/components/BrowserDetail.vue';
 
 export default Vue.extend({
     components: {

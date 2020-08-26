@@ -20,10 +20,11 @@
             
         </form>
         <div class="client-selection" v-if="seletectedClient">
-            <h2 class="client-selection__heading">Client ID to share with users:</h2>
+            <h2 class="client-selection__heading">Client url to share with users:</h2>
             <div class="client-selection__display">
-                <h2 class="client-selection__id">{{seletectedClient._id}}</h2>
-                <button class="button button-paste-to-clipboard" @click="copyToClipBoard(seletectedClient._id)">Copy to Clipboard</button>
+                <!-- <h2 class="client-selection__id">{{seletectedClient._id}}</h2> -->
+                <h2 class="client-selection__id">{{clientUrl}}</h2>
+                <button class="button button-paste-to-clipboard" @click="copyToClipBoard(clientUrl)">Copy to Clipboard</button>
             </div>
             <button class="button button--delete u-margin-top-small" @click="alertBeforeDeleting(seletectedClient)">Delete Client</button>
         </div>
@@ -43,11 +44,14 @@ export default Vue.extend({
         }
     },
     computed: {
-        ...mapGetters(['clients']),
+        ...mapGetters(['clients', 'clientUrl']),
         seletectedClient() {
             if (this.selectedIndex != 'default') return this.clients[this.selectedIndex];
             return null;
-        }
+        },
+        // clientUrl() {
+        //     return `${window.location.origin}/${this.seletectedClient._id}`
+        // }
     },
     watch: {
         async selectedIndex(newVal, oldVal) {
@@ -118,7 +122,7 @@ export default Vue.extend({
          margin: 2rem auto;
 
          @include respond(tab-port) {
-             width: 42rem;
+             width: 50rem;
          }
 
         &__heading {
@@ -129,16 +133,19 @@ export default Vue.extend({
         }
 
         &__display {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
+            @include respond(tab-port) {
+                display: flex;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+            
             
         }
 
         &__id {
             display: inline-block;
             color: $color-primary;
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: 600;
             font-family: 'Comfortaa', cursive;
             background-color: $color-secondary-light;

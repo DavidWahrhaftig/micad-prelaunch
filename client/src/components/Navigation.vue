@@ -2,18 +2,18 @@
     <div>
         <div class="nav__wrapper" v-if="$store.getters.clientConfig">
 
-            <router-link to="/" 
+            <router-link :to="{name: 'welcome', params: {clientID: $store.getters.clientID}}" 
                         class="nav__link"
                         :class="{'nav__link-current': $route.name == 'welcome'}"
                         tag="a"
                         ><span>Welcome</span></router-link>
                 
-            <router-link to="/details" 
+            <router-link :to="{name: 'details', params: {clientID: $store.getters.clientID}}"
                     class="nav__link"
                     :class="{'nav__link-current': $route.name == 'details'}"
                     tag="a"
                     >Your Details</router-link>
-            <router-link to="/instructions" 
+            <router-link :to="{name: 'instructions', params: {clientID: $store.getters.clientID}}"
                     class="nav__link"
                     :class="{'nav__link-current': $route.name == 'instructions'}"
                     tag="a"
@@ -34,10 +34,10 @@
                 href="https://support.zoho.com/portal/micad/en/signin"
                 target="_blank"
                 >Contact Support</a>
-            <a  class="nav__link"
+            <!-- <a  class="nav__link"
                 href="#"
                 @click="removeClientID"
-                >Change Client</a>
+                >Change Client</a> -->
         </div>
         
         <div class="nav__wrapper" v-else>
