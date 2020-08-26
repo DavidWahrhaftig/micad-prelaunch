@@ -103,7 +103,7 @@ const actions = {
     },
     async deleteClient({commit}: any, clientID: string) {
         try {
-            const res = await axios.delete(`api/admin/${clientID}`);
+            const res = await axios.delete(`/api/admin/${clientID}`);
             console.log(res.data.msg);
             // refresh page
             location.reload();
