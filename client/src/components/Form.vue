@@ -33,12 +33,8 @@
                 <div class="alert alert--success" v-if="submitSuccess">{{message}}</div>
             </div>
 
-            <!-- <div class="auth-verify u-margin-bottom-small" v-if="fetchedUser && $store.getters.clientConfig.ssoEnable">
-                <div class="auth-verify__item auth-verify__item--title">auth URL:</div>
-                <a class="auth-verify__item auth-verify__item--url" :href="$store.getters.clientConfig.authUrl">{{$store.getters.clientConfig.authUrl}}</a>
-                <div class="auth-verify__item auth-verify__itme--verify">Verify: <input class="form__checkbox" type="checkbox" v-model="fetchedUser.authUrlVerified"/></div>
-            </div> -->
-            <div class="auth-verify u-margin-bottom-small" v-if=" submitSuccess || ipAlreadyRecorded">
+            <!-- Auth URL Verification  -->
+            <div class="auth-verify u-margin-bottom-small" v-if="$store.getters.clientConfig.ssoEnable && (submitSuccess || ipAlreadyRecorded)">
                 <div class="auth-verify__url">
                     <span class="auth-verify__url--title">
                         Auth URL:
@@ -49,7 +45,6 @@
                     <span class="auth-verify__verification--text">Verify: </span>
                     <input class="auth-verify__verification--input form__checkbox" type="checkbox" v-model="verify"/>
                 </div>
-                <!-- <div class="auth-verify__item auth-verify__itme--verify">Verify: <input class="form__checkbox" type="checkbox" v-model="fetchedUser.authUrlVerified"/></div> -->
             </div>
         </form>
     </div>
