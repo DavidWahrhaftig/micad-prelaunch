@@ -1,7 +1,7 @@
 <template>
     <div>
-        <form @submit.prevent class="form">
-            <div class="form__group">
+        <!-- <form @submit.prevent class="form"> -->
+            <!-- <div class="form__group"> -->
                 <!-- <div class="form__label">
                     Select Client
                 </div> -->
@@ -9,8 +9,8 @@
                     <option selected value="default">Select Client</option>
                     <option v-for="(client, i) in clients" :key="i" :value="i">{{client.clientName}}</option>
                 </select>
-            </div>           
-        </form>
+            <!-- </div>            -->
+        <!-- </form> -->
 
 
         <div class="client-selection" v-if="seletectedClient">
@@ -111,37 +111,39 @@ export default Vue.extend({
 
          width: 37rem;
          margin: 2rem auto;
+         
 
          @include respond(tab-port) {
-             width: 50rem;
+            width: 50rem;
          }
 
         &__heading {
             font-size: 1.8rem;
             text-align: left;
-            
+            // text-align: center;
             display: block;
         }
 
         &__display {
+            width: 100%; 
             @include respond(tab-port) {
                 display: flex;
-                justify-content: space-between;
+                // justify-content: space-between;
+                // justify-content: center;
                 align-items: stretch;
-            }
-            
-            
+                // width: 100%;
+            }            
         }
 
         &__id {
-            display: inline-block;
+            // display: inline-block;
             color: $color-primary;
             font-size: 1.3rem;
             font-weight: 600;
             font-family: 'Comfortaa', cursive;
             background-color: $color-secondary-light;
             padding: 0.5rem;
-            
+            width: 100%;
             // to center text inside a stretch flex item
             display: flex;
             align-items: center;

@@ -24,8 +24,7 @@
         &--switch {
             display: flex;
             justify-content: space-between;
-        }
-        
+        }   
     }
 
     &__switch-container {
@@ -252,16 +251,18 @@
         padding: 1rem 1em;
         border-radius: 0.3rem;
         font-size: 2rem;
+        // display: inline-block;
+        
 
         background-color: $color-white;
 
         @include respond(tab-port) {
-            width: 75%;
+            width: 50rem;
         }
 
         @include respond(tab-land) {
             padding: 0.5rem 1em;
-            width: 42rem;
+            // width: 42rem;
         }
         &:hover {
             background-color: $color-secondary;
