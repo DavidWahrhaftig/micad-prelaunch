@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'admin')));
 // Bring in the Database Config
 const db = require('./keys').mongoURI;
 // Run this for development "C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe"
-mongoose.connect(db, 
+mongoose.connect("mongodb://db:27017/micad-prelaunch", 
     {   
         useFindAndModify: false,
         useNewUrlParser: true, 
@@ -38,9 +38,6 @@ mongoose.connect(db,
         Client.findOne({}).then(client => {
             if (!client) {
                 // need to setup Config collection
-                // const adminSettings = {
-                //     title: 'Uoft'
-                // }
                 Client.create({clientName: 'Oxford'}).then(res => {
                     console.log(res);
                 }).catch(err => {
