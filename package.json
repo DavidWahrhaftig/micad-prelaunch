@@ -1,9 +1,10 @@
 {
-  "name": "coming-soon",
+  "name": "micad-pre-launch",
   "version": "1.0.0",
   "description": "Coming Soon Page for new system upgrdae to collect Micad Client User's IP",
   "main": "app.js",
   "scripts": {
+    "start-with-windows-config": "set NODE_ENV=production&&set \"DATABASEURL=mongodb+srv://david:comingsoon@cluster0.lx1gs.mongodb.net/micad-prelaunch?retryWrites=true&w=majority\"&&node server/app.js",
     "start": "node server/app.js",
     "server": "nodemon server/app.js",
     "admin": "npm run serve --prefix admin",
