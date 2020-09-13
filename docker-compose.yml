@@ -7,13 +7,32 @@ services:
             - db-data:/var/lib/mongodb/data
         ports:
             - 27017:27017
-    app:
-        build: .
-        ports:
+    api:
+        build: 
+            context: . 
+            dockerfile: api/Dockerfile
+        ports: 
             - 5000:5000
+        environment: 
+            NODE_ENV: "production"
+            DATABASEURL: "mongodb://db:27017/micad-prelaunch"
         depends_on: 
             - db
-        links:
-            - db
+    admin:
+        build: 
+            context: . 
+            dockerfile: admin/Dockerfile
+        ports:
+            - 8080:8080
+        depends_on: 
+            - api
+    client:
+        build: 
+            context: . 
+            dockerfile: client/Dockerfile
+        ports:
+            - 8081:8081
+        depends_on: 
+            - api
 volumes:
     db-data:
